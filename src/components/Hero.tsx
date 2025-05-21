@@ -19,7 +19,7 @@ const Hero = () => {
             <Button className="bg-traveler-orange hover:bg-orange-600 text-white text-lg px-8 py-6">
               Find Your Path
             </Button>
-            <Button variant="outline" className="border-white text-white hover:bg-white/20 hover:border-white hover:text-white text-lg px-8 py-6 font-medium">
+            <Button variant="outline" className="border-white text-black hover:bg-white/20 hover:border-white hover:text-black text-lg px-8 py-6 font-medium">
               How It Works
             </Button>
           </div>
