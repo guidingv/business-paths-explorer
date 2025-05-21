@@ -12,16 +12,16 @@ const Navbar = () => {
         </Link>
         
         <div className="hidden md:flex items-center space-x-6">
-          <Link to="/" className="text-traveler-darkgray hover:text-traveler-blue transition-colors">
+          <Link to="/" className="text-traveler-darkgray hover:text-traveler-blue transition-colors font-medium">
             Home
           </Link>
-          <Link to="/cities" className="text-traveler-darkgray hover:text-traveler-blue transition-colors">
+          <Link to="/cities" className="text-traveler-blue font-medium hover:text-traveler-blue/80 transition-colors">
             Cities
           </Link>
-          <Link to="/about" className="text-traveler-darkgray hover:text-traveler-blue transition-colors">
+          <Link to="/about" className="text-traveler-darkgray hover:text-traveler-blue transition-colors font-medium">
             About
           </Link>
-          <Link to="/contact" className="text-traveler-darkgray hover:text-traveler-blue transition-colors">
+          <Link to="/contact" className="text-traveler-darkgray hover:text-traveler-blue transition-colors font-medium">
             Contact
           </Link>
         </div>

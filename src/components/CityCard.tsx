@@ -20,13 +20,13 @@ const CityCard = ({ name, country, imageUrl, slug, pathCount }: CityCardProps) =
             alt={`${name}, ${country}`}
             className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/60 to-transparent"></div>
         </div>
         <div className="absolute bottom-0 left-0 p-4 w-full">
           <h3 className="text-xl font-bold text-white mb-1">{name}</h3>
-          <p className="text-white/80 mb-2">{country}</p>
+          <p className="text-white mb-2">{country}</p>
           {pathCount && (
-            <span className="bg-traveler-orange/80 text-white text-sm px-2 py-1 rounded-full">
+            <span className="bg-traveler-orange text-white text-sm px-2 py-1 rounded-full font-medium">
               {pathCount} paths available
             </span>
           )}
