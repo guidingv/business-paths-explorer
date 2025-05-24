@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useNavigate, useParams } from 'react-router-dom';
+import { Clock, MapPin } from 'lucide-react';
 
 interface RoutePreference {
   duration: 30 | 60 | 120;
@@ -400,25 +401,50 @@ const PathDurationSelector = () => {
           </div>
           
           {selectedRoute && (
-            <div className="space-y-6">
+            <div className="bg-white rounded-xl shadow-md p-6 max-w-4xl mx-auto">
               {routes
                 .filter(route => route.id === selectedRoute)
                 .map((route) => (
-                  <div key={route.id} className="bg-white rounded-xl shadow-md p-6 max-w-4xl mx-auto">
+                  <div key={route.id}>
                     <h3 className="text-2xl font-bold text-traveler-blue mb-4">{route.name}</h3>
-                    <div className="flex gap-4 text-gray-600 mb-4">
-                      <span>⏱️ {route.duration} minutes</span>
-                      <span>🚶 {route.distance}</span>
+                    <div className="flex gap-4 text-gray-600 mb-6">
+                      <span className="flex items-center"><Clock className="w-4 h-4 mr-1" /> {route.duration} minutes</span>
+                      <span className="flex items-center"><MapPin className="w-4 h-4 mr-1" /> {route.distance}</span>
                       <span>🎯 {preferences.walkingPace} pace</span>
                     </div>
                     
-                    <div>
-                      <h4 className="font-semibold mb-2">Route Highlights:</h4>
-                      <div className="flex flex-wrap gap-2">
+                    <div className="mb-6">
+                      <h4 className="font-semibold mb-3 text-lg">Route Highlights:</h4>
+                      <div className="flex flex-wrap gap-2 mb-6">
                         {route.highlights.map((highlight: string, index: number) => (
                           <span key={index} className="bg-traveler-lightgray px-3 py-1 rounded-full text-sm">
                             {highlight}
                           </span>
+                        ))}
+                      </div>
+                    </div>
+
+                    <div>
+                      <h4 className="font-semibold mb-4 text-lg">Route Steps:</h4>
+                      <div className="space-y-4">
+                        {route.steps.map((step: any, index: number) => (
+                          <div key={index} className="flex items-start space-x-4 p-4 border border-gray-200 rounded-lg">
+                            <div className="flex-shrink-0">
+                              <div className="w-8 h-8 bg-traveler-teal text-white rounded-full flex items-center justify-center font-semibold text-sm">
+                                {index + 1}
+                              </div>
+                            </div>
+                            <div className="flex-grow">
+                              <h5 className="font-semibold text-traveler-blue mb-1">{step.location}</h5>
+                              <p className="text-gray-600 text-sm mb-2">{step.description}</p>
+                              {step.duration > 0 && (
+                                <span className="inline-flex items-center text-xs text-gray-500">
+                                  <Clock className="w-3 h-3 mr-1" />
+                                  {step.duration} minutes
+                                </span>
+                              )}
+                            </div>
+                          </div>
                         ))}
                       </div>
                     </div>
