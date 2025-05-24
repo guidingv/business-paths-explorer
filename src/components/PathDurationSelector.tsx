@@ -1,8 +1,9 @@
-
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { useNavigate, useParams } from 'react-router-dom';
 
 interface RoutePreference {
   duration: 30 | 60 | 120;
@@ -12,6 +13,8 @@ interface RoutePreference {
 }
 
 const PathDurationSelector = () => {
+  const navigate = useNavigate();
+  const { citySlug } = useParams();
   const [selectedDuration, setSelectedDuration] = useState<30 | 60 | 120>(60);
   const [currentStep, setCurrentStep] = useState<'duration' | 'interests' | 'pace' | 'location' | 'results'>('duration');
   const [preferences, setPreferences] = useState<RoutePreference>({
@@ -21,6 +24,7 @@ const PathDurationSelector = () => {
     startLocation: ''
   });
   const [routes, setRoutes] = useState<any[]>([]);
+  const [selectedRoute, setSelectedRoute] = useState<string>('');
 
   const interestOptions = [
     'Architecture', 'Food & Dining', 'Shopping', 'Parks & Nature', 
@@ -49,29 +53,56 @@ const PathDurationSelector = () => {
     // Simulate generating routes based on preferences
     const mockRoutes = [
       {
-        id: 1,
+        id: '1',
         name: 'Historic Downtown Walk',
         duration: preferences.duration,
         distance: '2.5 km',
-        highlights: ['City Hall', 'Historic District', 'Local Café']
+        highlights: ['City Hall', 'Historic District', 'Local Café'],
+        steps: [
+          { location: 'Starting Point', description: 'Begin your journey at the specified location', duration: 0 },
+          { location: 'City Hall', description: 'Visit the historic City Hall building', duration: 15 },
+          { location: 'Historic District', description: 'Explore the charming historic district', duration: 25 },
+          { location: 'Local Café', description: 'Stop for refreshments at a popular local café', duration: 15 },
+          { location: 'Return to Start', description: 'Head back to your starting point', duration: 5 }
+        ]
       },
       {
-        id: 2,
+        id: '2',
         name: 'Food & Culture Trail',
         duration: preferences.duration,
         distance: '1.8 km',
-        highlights: ['Street Food Market', 'Art Gallery', 'Central Park']
+        highlights: ['Street Food Market', 'Art Gallery', 'Central Park'],
+        steps: [
+          { location: 'Starting Point', description: 'Begin your culinary adventure', duration: 0 },
+          { location: 'Street Food Market', description: 'Sample local street food delicacies', duration: 20 },
+          { location: 'Art Gallery', description: 'Browse contemporary local art', duration: 20 },
+          { location: 'Central Park', description: 'Relax in the beautiful central park', duration: 15 },
+          { location: 'Return to Start', description: 'Complete your loop back to start', duration: 5 }
+        ]
       },
       {
-        id: 3,
+        id: '3',
         name: 'Business District Explorer',
         duration: preferences.duration,
         distance: '3.2 km',
-        highlights: ['Financial Center', 'Rooftop Views', 'Coffee District']
+        highlights: ['Financial Center', 'Rooftop Views', 'Coffee District'],
+        steps: [
+          { location: 'Starting Point', description: 'Start exploring the business district', duration: 0 },
+          { location: 'Financial Center', description: 'See the impressive financial buildings', duration: 25 },
+          { location: 'Rooftop Views', description: 'Enjoy panoramic city views from a rooftop', duration: 20 },
+          { location: 'Coffee District', description: 'Experience the trendy coffee culture', duration: 15 },
+          { location: 'Return to Start', description: 'End your business district tour', duration: 5 }
+        ]
       }
     ];
     setRoutes(mockRoutes);
     setCurrentStep('results');
+  };
+
+  const handleStartRoute = () => {
+    if (selectedRoute && citySlug) {
+      navigate(`/cities/${citySlug}/route/${selectedRoute}`);
+    }
   };
 
   const resetFlow = () => {
@@ -326,46 +357,75 @@ const PathDurationSelector = () => {
             </p>
           </div>
           
-          <div className="space-y-6 mb-8">
-            {routes.map((route) => (
-              <div key={route.id} className="bg-white rounded-xl shadow-md p-6 max-w-4xl mx-auto">
-                <div className="flex flex-col md:flex-row justify-between items-start mb-4">
-                  <div>
-                    <h3 className="text-2xl font-bold text-traveler-blue mb-2">{route.name}</h3>
+          <div className="bg-white rounded-xl shadow-md p-8 max-w-4xl mx-auto mb-8">
+            <div className="mb-6">
+              <Label htmlFor="route-select" className="text-lg font-medium mb-4 block">
+                Choose Your Route
+              </Label>
+              <Select value={selectedRoute} onValueChange={setSelectedRoute}>
+                <SelectTrigger className="w-full text-lg py-6">
+                  <SelectValue placeholder="Select a route to start your journey" />
+                </SelectTrigger>
+                <SelectContent className="bg-white border shadow-lg">
+                  {routes.map((route) => (
+                    <SelectItem key={route.id} value={route.id} className="text-lg py-3">
+                      <div className="flex flex-col">
+                        <span className="font-medium">{route.name}</span>
+                        <span className="text-sm text-gray-600">
+                          ⏱️ {route.duration} min • 🚶 {route.distance} • 🎯 {preferences.walkingPace} pace
+                        </span>
+                      </div>
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+            
+            <div className="text-center">
+              <Button 
+                className="bg-traveler-orange hover:bg-orange-600 text-white text-lg px-8 py-6 mr-4"
+                onClick={handleStartRoute}
+                disabled={!selectedRoute}
+              >
+                Start This Route
+              </Button>
+              <Button 
+                variant="outline"
+                className="text-lg px-8 py-6"
+                onClick={resetFlow}
+              >
+                Plan Another Route
+              </Button>
+            </div>
+          </div>
+          
+          {selectedRoute && (
+            <div className="space-y-6">
+              {routes
+                .filter(route => route.id === selectedRoute)
+                .map((route) => (
+                  <div key={route.id} className="bg-white rounded-xl shadow-md p-6 max-w-4xl mx-auto">
+                    <h3 className="text-2xl font-bold text-traveler-blue mb-4">{route.name}</h3>
                     <div className="flex gap-4 text-gray-600 mb-4">
                       <span>⏱️ {route.duration} minutes</span>
                       <span>🚶 {route.distance}</span>
                       <span>🎯 {preferences.walkingPace} pace</span>
                     </div>
+                    
+                    <div>
+                      <h4 className="font-semibold mb-2">Route Highlights:</h4>
+                      <div className="flex flex-wrap gap-2">
+                        {route.highlights.map((highlight: string, index: number) => (
+                          <span key={index} className="bg-traveler-lightgray px-3 py-1 rounded-full text-sm">
+                            {highlight}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
                   </div>
-                  <Button className="bg-traveler-orange hover:bg-orange-600 text-white">
-                    Start This Route
-                  </Button>
-                </div>
-                
-                <div>
-                  <h4 className="font-semibold mb-2">Route Highlights:</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {route.highlights.map((highlight: string, index: number) => (
-                      <span key={index} className="bg-traveler-lightgray px-3 py-1 rounded-full text-sm">
-                        {highlight}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-          
-          <div className="text-center">
-            <Button 
-              variant="outline"
-              className="text-lg px-8 py-6"
-              onClick={resetFlow}
-            >
-              Plan Another Route
-            </Button>
-          </div>
+                ))}
+            </div>
+          )}
         </div>
       </section>
     );
