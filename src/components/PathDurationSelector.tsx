@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -377,29 +378,45 @@ const PathDurationSelector = () => {
                 <SelectTrigger className="w-full text-lg py-6 bg-white border border-gray-300 shadow-sm">
                   <SelectValue placeholder="Select a route to start your journey" />
                 </SelectTrigger>
-                <SelectContent className="bg-white border shadow-lg z-50">
+                <SelectContent className="bg-white border shadow-lg z-50 max-w-none w-full">
                   {routes.map((route) => (
-                    <SelectItem key={route.id} value={route.id} className="text-left py-4 px-4 hover:bg-gray-50">
-                      <div className="flex flex-col space-y-1">
-                        <span className="font-semibold text-base text-gray-900">{route.name}</span>
-                        <span className="text-sm text-gray-600">{route.description}</span>
-                        <div className="flex items-center gap-4 text-xs text-gray-500 mt-1">
-                          <span className="flex items-center">
-                            <Clock className="w-3 h-3 mr-1" />
-                            {route.duration} min
-                          </span>
-                          <span className="flex items-center">
-                            <MapPin className="w-3 h-3 mr-1" />
-                            {route.distance}
-                          </span>
-                          <span>🎯 {preferences.walkingPace} pace</span>
-                        </div>
-                        <div className="flex flex-wrap gap-1 mt-2">
-                          {route.highlights.slice(0, 3).map((highlight: string, index: number) => (
-                            <span key={index} className="bg-traveler-lightgray px-2 py-0.5 rounded text-xs">
-                              {highlight}
+                    <SelectItem key={route.id} value={route.id} className="text-left p-6 hover:bg-gray-50 cursor-pointer border-b border-gray-100 last:border-b-0">
+                      <div className="flex flex-col space-y-3 w-full">
+                        <div className="flex justify-between items-start">
+                          <span className="font-bold text-xl text-gray-900">{route.name}</span>
+                          <div className="flex items-center gap-3 text-sm text-gray-500 ml-4">
+                            <span className="flex items-center bg-blue-50 px-2 py-1 rounded">
+                              <Clock className="w-4 h-4 mr-1" />
+                              {route.duration} min
                             </span>
-                          ))}
+                            <span className="flex items-center bg-green-50 px-2 py-1 rounded">
+                              <MapPin className="w-4 h-4 mr-1" />
+                              {route.distance}
+                            </span>
+                          </div>
+                        </div>
+                        
+                        <p className="text-gray-600 text-base leading-relaxed">{route.description}</p>
+                        
+                        <div className="flex items-center gap-2 text-sm">
+                          <span className="bg-purple-100 text-purple-700 px-3 py-1 rounded-full font-medium">
+                            🚶‍♂️ {preferences.walkingPace} pace
+                          </span>
+                        </div>
+                        
+                        <div>
+                          <span className="text-sm font-semibold text-gray-700 block mb-2">Route Highlights:</span>
+                          <div className="flex flex-wrap gap-2">
+                            {route.highlights.map((highlight: string, index: number) => (
+                              <span key={index} className="bg-traveler-teal/10 text-traveler-teal px-3 py-1 rounded-full text-sm font-medium border border-traveler-teal/20">
+                                {highlight}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+                        
+                        <div className="pt-2 border-t border-gray-100">
+                          <span className="text-xs text-gray-500">Click to select this route and see detailed step-by-step directions</span>
                         </div>
                       </div>
                     </SelectItem>
