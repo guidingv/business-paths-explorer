@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
@@ -5,7 +6,7 @@ import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { ArrowLeft, MapPin, Clock, Info, Star, Camera } from 'lucide-react';
 
-// Mock route data - in real app this would come from API
+// Real route data for New York City
 const routeData = {
   '1': {
     id: '1',
@@ -18,7 +19,7 @@ const routeData = {
         location: 'Times Square', 
         description: 'Begin your journey at the iconic Times Square - the crossroads of the world', 
         duration: 0,
-        coordinates: '40.7580,-73.9855',
+        coordinates: [40.7580, -73.9855],
         details: 'Start your walk at the famous red steps overlooking Times Square. Take in the massive digital billboards and bustling energy.',
         tips: 'Best photo spots are from the red steps or the TKTS booth area',
         highlights: ['Iconic billboards', 'Street performers', 'TKTS red steps'],
@@ -29,7 +30,7 @@ const routeData = {
         location: 'Bryant Park', 
         description: 'Visit the beautiful Bryant Park and the New York Public Library', 
         duration: 15,
-        coordinates: '40.7536,-73.9832',
+        coordinates: [40.7536, -73.9832],
         details: 'A green oasis in midtown Manhattan, Bryant Park offers seasonal activities and is home to the iconic New York Public Library with its famous lion statues.',
         tips: 'Check out the library\'s Rose Main Reading Room if open, and grab a coffee from one of the park kiosks',
         highlights: ['NY Public Library', 'Seasonal activities', 'Green space in the city'],
@@ -40,7 +41,7 @@ const routeData = {
         location: 'Grand Central Terminal', 
         description: 'Explore the historic Grand Central Terminal with its celestial ceiling', 
         duration: 20,
-        coordinates: '40.7527,-73.9772',
+        coordinates: [40.7527, -73.9772],
         details: 'This Beaux-Arts masterpiece features a stunning astronomical ceiling mural, luxury shopping, and gourmet food options in the lower level.',
         tips: 'Look up at the constellation ceiling, visit the food court downstairs, and check out the whispering gallery',
         highlights: ['Celestial ceiling', 'Architecture', 'Food court', 'Whispering gallery'],
@@ -51,7 +52,7 @@ const routeData = {
         location: 'Chrysler Building', 
         description: 'Admire the Art Deco masterpiece - the Chrysler Building', 
         duration: 15,
-        coordinates: '40.7516,-73.9755',
+        coordinates: [40.7516, -73.9755],
         details: 'One of NYC\'s most beautiful skyscrapers, this Art Deco icon features stunning metalwork and is best viewed from street level and nearby buildings.',
         tips: 'Best viewing spots are from the corner of 42nd and Lexington, or from the nearby buildings for aerial views',
         highlights: ['Art Deco architecture', 'Metalwork details', 'Historic significance'],
@@ -62,7 +63,7 @@ const routeData = {
         location: 'Times Square', 
         description: 'Return to your starting point and reflect on your journey', 
         duration: 10,
-        coordinates: '40.7580,-73.9855',
+        coordinates: [40.7580, -73.9855],
         details: 'Complete your loop back at Times Square. Notice how the energy and lights feel different after your historic walk through Manhattan.',
         tips: 'Great time to grab dinner at one of the many restaurants or catch a Broadway show',
         highlights: ['Full circle completion', 'Dinner options', 'Broadway theaters nearby'],
@@ -76,51 +77,51 @@ const routeData = {
     name: 'Food & Culture Trail',
     duration: 60,
     distance: '1.8 km',
-    startLocation: 'Times Square, New York',
+    startLocation: 'Little Italy, New York',
     steps: [
       { 
-        location: 'Times Square', 
-        description: 'Begin your culinary adventure in the heart of NYC', 
+        location: 'Little Italy', 
+        description: 'Begin your culinary adventure in historic Little Italy', 
         duration: 0,
-        coordinates: '40.7580,-73.9855',
-        details: 'Start your food journey surrounded by countless dining options, from food trucks to world-class restaurants.',
-        tips: 'Skip the tourist trap restaurants and head straight to your first authentic stop',
-        highlights: ['Food diversity', 'Cultural melting pot', 'Energy of the city'],
+        coordinates: [40.7189, -73.9973],
+        details: 'Start your food journey in one of NYC\'s most iconic neighborhoods, known for authentic Italian cuisine and rich cultural heritage.',
+        tips: 'Try the fresh mozzarella at Alleva Dairy, the oldest cheese shop in America',
+        highlights: ['Historic neighborhood', 'Authentic Italian food', 'Street festivals'],
         estimatedCost: '$0',
-        bestTimeToVisit: 'Before meal times'
+        bestTimeToVisit: 'Morning or early afternoon'
       },
       { 
-        location: 'Koreatown', 
-        description: 'Sample authentic Korean cuisine and experience Korean culture', 
-        duration: 20,
-        coordinates: '40.7505,-73.9852',
-        details: 'Experience authentic Korean culture through food, karaoke, and traditional establishments. Try Korean BBQ, hotpot, or grab some Korean fried chicken.',
-        tips: 'Try the Korean BBQ at Kang Ho Dong Baekjeong or get Korean fried chicken at Turntable Chicken Jazz',
-        highlights: ['Korean BBQ', 'Karaoke bars', 'Authentic culture', 'Korean fried chicken'],
-        estimatedCost: '$15-30 per person',
-        bestTimeToVisit: 'Lunch or dinner time'
-      },
-      { 
-        location: 'High Line Park', 
-        description: 'Walk the elevated park with stunning city views and art installations', 
+        location: 'Chinatown', 
+        description: 'Explore the vibrant streets and authentic cuisine of Chinatown', 
         duration: 25,
-        coordinates: '40.7480,-74.0048',
-        details: 'This elevated linear park built on former railway tracks offers unique perspectives of the city, contemporary art installations, and great photo opportunities.',
-        tips: 'Enter at Gansevoort Street for the full experience, and look out for seasonal art installations',
-        highlights: ['Elevated city views', 'Art installations', 'Unique architecture', 'Photo opportunities'],
-        estimatedCost: '$0',
-        bestTimeToVisit: 'Afternoon for best lighting'
+        coordinates: [40.7158, -73.9970],
+        details: 'One of the largest and oldest Chinatowns in the US, offering authentic dim sum, traditional markets, and cultural experiences.',
+        tips: 'Visit Joe\'s Shanghai for soup dumplings and explore the fish markets on Mott Street',
+        highlights: ['Dim sum restaurants', 'Traditional markets', 'Cultural temples'],
+        estimatedCost: '$15-25 per person',
+        bestTimeToVisit: 'Lunch time for best dim sum'
       },
       { 
-        location: 'Chelsea Market', 
-        description: 'Explore the famous indoor food hall with diverse culinary options', 
+        location: 'Stone Street Historic District', 
+        description: 'Walk through cobblestone streets with outdoor dining', 
+        duration: 20,
+        coordinates: [40.7041, -74.0124],
+        details: 'Historic cobblestone street dating back to the 1600s, now lined with restaurants and bars offering outdoor dining.',
+        tips: 'Great for happy hour and dinner, try Adrienne\'s Pizza Bar for authentic NYC pizza',
+        highlights: ['Historic cobblestones', 'Outdoor dining', 'Colonial architecture'],
+        estimatedCost: '$20-35 for meal',
+        bestTimeToVisit: 'Happy hour (5-7 PM)'
+      },
+      { 
+        location: 'South Street Seaport', 
+        description: 'End at the waterfront with views of Brooklyn Bridge', 
         duration: 15,
-        coordinates: '40.7420,-74.0063',
-        details: 'A food lover\'s paradise housed in a former cookie factory, featuring dozens of vendors offering everything from tacos to lobster rolls.',
-        tips: 'Try the lobster roll at Lobster Place, tacos at Los Tacos No. 1, or browse unique artisanal products',
-        highlights: ['Diverse food vendors', 'Historic building', 'Artisanal products', 'Lobster rolls'],
-        estimatedCost: '$10-25 per item',
-        bestTimeToVisit: 'Lunch time or early dinner'
+        coordinates: [40.7063, -74.0030],
+        details: 'Historic seaport with stunning views of the Brooklyn Bridge, East River, and Brooklyn skyline. Great shops and restaurants.',
+        tips: 'Perfect spot for photos of Brooklyn Bridge and to enjoy a drink with river views',
+        highlights: ['Brooklyn Bridge views', 'Waterfront dining', 'Historic ships'],
+        estimatedCost: '$15-30 for drinks',
+        bestTimeToVisit: 'Sunset for best photos'
       }
     ]
   },
@@ -129,51 +130,51 @@ const routeData = {
     name: 'Business District Explorer',
     duration: 60,
     distance: '3.2 km',
-    startLocation: 'Times Square, New York',
+    startLocation: 'Wall Street, New York',
     steps: [
       { 
-        location: 'Times Square', 
-        description: 'Start your business district exploration from the commercial heart', 
-        duration: 0,
-        coordinates: '40.7580,-73.9855',
-        details: 'Begin your journey into NYC\'s financial and business world from this commercial epicenter.',
-        tips: 'Take the subway (4,5,6 trains) to save time getting to Wall Street',
-        highlights: ['Commercial energy', 'Starting point', 'Transit connections'],
-        estimatedCost: '$2.90 for subway',
-        bestTimeToVisit: 'Business hours'
-      },
-      { 
         location: 'Wall Street', 
-        description: 'Experience the heart of American finance and global economics', 
-        duration: 25,
-        coordinates: '40.7074,-74.0113',
-        details: 'Walk among the historic buildings where global finance happens daily. See the famous Charging Bull statue and the New York Stock Exchange.',
-        tips: 'Visit the Charging Bull early to avoid crowds, and take photos with Federal Hall where George Washington was inaugurated',
-        highlights: ['NYSE building', 'Charging Bull statue', 'Federal Hall', 'Financial history'],
+        description: 'Start at the heart of American finance', 
+        duration: 0,
+        coordinates: [40.7074, -74.0113],
+        details: 'Begin your journey at the most famous financial street in the world, home to the New York Stock Exchange.',
+        tips: 'Visit early morning to see the business atmosphere, take photos with the Charging Bull',
+        highlights: ['NYSE building', 'Federal Hall', 'Historic significance'],
         estimatedCost: '$0',
-        bestTimeToVisit: 'Weekday morning for business atmosphere'
+        bestTimeToVisit: 'Weekday morning'
       },
       { 
-        location: 'One World Observatory', 
-        description: 'Enjoy breathtaking panoramic views from the top of One World Trade Center', 
+        location: 'Charging Bull Statue', 
+        description: 'Visit the iconic symbol of Wall Street optimism', 
+        duration: 10,
+        coordinates: [40.7056, -74.0134],
+        details: 'This bronze sculpture has become a symbol of aggressive financial optimism and prosperity. A must-see photo opportunity.',
+        tips: 'Early morning or late evening for fewer crowds, touch the nose for good luck',
+        highlights: ['Iconic photo spot', 'Symbol of prosperity', 'Bronze sculpture'],
+        estimatedCost: '$0',
+        bestTimeToVisit: 'Early morning'
+      },
+      { 
+        location: 'One World Trade Center', 
+        description: 'Experience the rebuilt Freedom Tower and 9/11 Memorial', 
+        duration: 30,
+        coordinates: [40.7127, -74.0134],
+        details: 'The tallest building in the Western Hemisphere, built as a symbol of resilience. The 9/11 Memorial features reflecting pools in the footprints of the original towers.',
+        tips: 'Book observatory tickets in advance, allow time for security screening, visit the memorial pools',
+        highlights: ['Tallest building in Western Hemisphere', '9/11 Memorial', 'Observatory views'],
+        estimatedCost: '$35-45 for observatory',
+        bestTimeToVisit: 'Clear weather for views'
+      },
+      { 
+        location: 'Battery Park', 
+        description: 'End at the waterfront park with Statue of Liberty views', 
         duration: 20,
-        coordinates: '40.7127,-74.0134',
-        details: 'Experience stunning 360-degree views of NYC from the tallest building in the Western Hemisphere. The observatory offers interactive exhibits about the city.',
-        tips: 'Book tickets in advance, go during clear weather, and time your visit for sunset if possible',
-        highlights: ['360-degree city views', 'Interactive exhibits', 'Tallest building in Western Hemisphere', 'Sunset views'],
-        estimatedCost: '$35-45 for tickets',
-        bestTimeToVisit: 'Clear weather, sunset time'
-      },
-      { 
-        location: 'Stone Street', 
-        description: 'Experience historic cobblestone dining and nightlife', 
-        duration: 15,
-        coordinates: '40.7041,-74.0124',
-        details: 'Walk on actual 17th-century cobblestones while enjoying outdoor dining and historic pubs. This area comes alive after work hours with financial district workers.',
-        tips: 'Best visited for happy hour or dinner, try the historic pubs like Stone Street Tavern',
-        highlights: ['17th-century cobblestones', 'Historic pubs', 'Outdoor dining', 'After-work atmosphere'],
-        estimatedCost: '$15-30 for drinks/food',
-        bestTimeToVisit: 'Happy hour (5-7 PM)'
+        coordinates: [40.7033, -74.0170],
+        details: 'Historic park at the southern tip of Manhattan offering stunning views of New York Harbor and the Statue of Liberty.',
+        tips: 'Great spot for Statue of Liberty photos, catch the Staten Island Ferry for free harbor views',
+        highlights: ['Statue of Liberty views', 'Harbor views', 'Historic fort'],
+        estimatedCost: '$0 (free ferry available)',
+        bestTimeToVisit: 'Sunset for golden hour photos'
       }
     ]
   }
@@ -197,12 +198,12 @@ const Route = () => {
     if (!route) return '';
     
     const waypoints = route.steps
-      .slice(1, -1) // Remove first and last step
-      .map((step: any) => step.coordinates)
+      .slice(1, -1)
+      .map((step: any) => `${step.coordinates[0]},${step.coordinates[1]}`)
       .join('|');
     
-    const origin = route.steps[0].coordinates;
-    const destination = route.steps[route.steps.length - 1].coordinates;
+    const origin = `${route.steps[0].coordinates[0]},${route.steps[0].coordinates[1]}`;
+    const destination = `${route.steps[route.steps.length - 1].coordinates[0]},${route.steps[route.steps.length - 1].coordinates[1]}`;
     
     return `https://www.google.com/maps/dir/${origin}/${destination}${waypoints ? `/${waypoints}` : ''}`;
   };
@@ -210,6 +211,17 @@ const Route = () => {
   const openInGoogleMaps = () => {
     const url = generateGoogleMapsUrl();
     window.open(url, '_blank');
+  };
+
+  const generateOpenStreetMapUrl = () => {
+    if (!route) return '';
+    
+    const center = route.steps[0].coordinates;
+    const markers = route.steps
+      .map((step: any, index: number) => `pin-s-${index + 1}+ff0000(${step.coordinates[1]},${step.coordinates[0]})`)
+      .join(',');
+    
+    return `https://www.openstreetmap.org/?mlat=${center[0]}&mlon=${center[1]}&zoom=14#map=14/${center[0]}/${center[1]}`;
   };
 
   if (notFound) {
@@ -286,8 +298,9 @@ const Route = () => {
                 <Button 
                   variant="outline"
                   className="text-lg px-6 py-3"
+                  onClick={() => window.open(generateOpenStreetMapUrl(), '_blank')}
                 >
-                  Download Route
+                  View on OpenStreetMap
                 </Button>
               </div>
             </div>
@@ -373,24 +386,36 @@ const Route = () => {
             </div>
           </div>
 
-          {/* Embedded Google Maps */}
+          {/* OpenStreetMap Preview */}
           <div className="bg-white rounded-xl shadow-md p-6">
             <h2 className="text-2xl font-bold text-traveler-blue mb-6">Route Map</h2>
-            <div className="relative w-full h-96 rounded-lg overflow-hidden">
+            <div className="relative w-full h-96 rounded-lg overflow-hidden border">
               <iframe
-                src={`https://www.google.com/maps/embed/v1/directions?key=YOUR_GOOGLE_MAPS_API_KEY&origin=${route.steps[0].coordinates}&destination=${route.steps[route.steps.length - 1].coordinates}&waypoints=${route.steps.slice(1, -1).map((step: any) => step.coordinates).join('|')}&mode=walking`}
+                src={`https://www.openstreetmap.org/export/embed.html?bbox=${route.steps[0].coordinates[1] - 0.01},${route.steps[0].coordinates[0] - 0.01},${route.steps[0].coordinates[1] + 0.01},${route.steps[0].coordinates[0] + 0.01}&layer=mapnik&marker=${route.steps[0].coordinates[0]},${route.steps[0].coordinates[1]}`}
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}
                 allowFullScreen
                 loading="lazy"
-                referrerPolicy="no-referrer-when-downgrade"
                 className="rounded-lg"
               />
             </div>
-            <p className="text-sm text-gray-500 mt-4">
-              Note: You'll need to add your Google Maps API key to view the embedded map.
-            </p>
+            <div className="mt-4 flex gap-4">
+              <Button 
+                variant="outline"
+                onClick={() => window.open(generateOpenStreetMapUrl(), '_blank')}
+                className="text-sm"
+              >
+                View Full Map on OpenStreetMap
+              </Button>
+              <Button 
+                variant="outline"
+                onClick={openInGoogleMaps}
+                className="text-sm"
+              >
+                Open Route in Google Maps
+              </Button>
+            </div>
           </div>
         </div>
       </main>
