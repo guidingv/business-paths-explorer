@@ -59,6 +59,7 @@ const PathDurationSelector = () => {
         duration: preferences.duration,
         distance: '2.5 km',
         highlights: ['City Hall', 'Historic District', 'Local Café'],
+        description: 'Explore the heart of the city with historic landmarks and charming cafés',
         steps: [
           { location: 'Starting Point', description: 'Begin your journey at the specified location', duration: 0 },
           { location: 'City Hall', description: 'Visit the historic City Hall building', duration: 15 },
@@ -73,6 +74,7 @@ const PathDurationSelector = () => {
         duration: preferences.duration,
         distance: '1.8 km',
         highlights: ['Street Food Market', 'Art Gallery', 'Central Park'],
+        description: 'A culinary journey through local flavors and cultural sites',
         steps: [
           { location: 'Starting Point', description: 'Begin your culinary adventure', duration: 0 },
           { location: 'Street Food Market', description: 'Sample local street food delicacies', duration: 20 },
@@ -87,6 +89,7 @@ const PathDurationSelector = () => {
         duration: preferences.duration,
         distance: '3.2 km',
         highlights: ['Financial Center', 'Rooftop Views', 'Coffee District'],
+        description: 'Discover the modern business heart with impressive architecture',
         steps: [
           { location: 'Starting Point', description: 'Start exploring the business district', duration: 0 },
           { location: 'Financial Center', description: 'See the impressive financial buildings', duration: 25 },
@@ -115,6 +118,11 @@ const PathDurationSelector = () => {
       startLocation: ''
     });
     setRoutes([]);
+    setSelectedRoute('');
+  };
+
+  const getSelectedRouteData = () => {
+    return routes.find(route => route.id === selectedRoute);
   };
 
   if (currentStep === 'duration') {
@@ -348,6 +356,8 @@ const PathDurationSelector = () => {
   }
 
   if (currentStep === 'results') {
+    const selectedRouteData = getSelectedRouteData();
+
     return (
       <section className="py-16 bg-traveler-lightgray">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -364,17 +374,33 @@ const PathDurationSelector = () => {
                 Choose Your Route
               </Label>
               <Select value={selectedRoute} onValueChange={setSelectedRoute}>
-                <SelectTrigger className="w-full text-lg py-6">
+                <SelectTrigger className="w-full text-lg py-6 bg-white border border-gray-300 shadow-sm">
                   <SelectValue placeholder="Select a route to start your journey" />
                 </SelectTrigger>
-                <SelectContent className="bg-white border shadow-lg">
+                <SelectContent className="bg-white border shadow-lg z-50">
                   {routes.map((route) => (
-                    <SelectItem key={route.id} value={route.id} className="text-lg py-3">
-                      <div className="flex flex-col">
-                        <span className="font-medium">{route.name}</span>
-                        <span className="text-sm text-gray-600">
-                          ⏱️ {route.duration} min • 🚶 {route.distance} • 🎯 {preferences.walkingPace} pace
-                        </span>
+                    <SelectItem key={route.id} value={route.id} className="text-left py-4 px-4 hover:bg-gray-50">
+                      <div className="flex flex-col space-y-1">
+                        <span className="font-semibold text-base text-gray-900">{route.name}</span>
+                        <span className="text-sm text-gray-600">{route.description}</span>
+                        <div className="flex items-center gap-4 text-xs text-gray-500 mt-1">
+                          <span className="flex items-center">
+                            <Clock className="w-3 h-3 mr-1" />
+                            {route.duration} min
+                          </span>
+                          <span className="flex items-center">
+                            <MapPin className="w-3 h-3 mr-1" />
+                            {route.distance}
+                          </span>
+                          <span>🎯 {preferences.walkingPace} pace</span>
+                        </div>
+                        <div className="flex flex-wrap gap-1 mt-2">
+                          {route.highlights.slice(0, 3).map((highlight: string, index: number) => (
+                            <span key={index} className="bg-traveler-lightgray px-2 py-0.5 rounded text-xs">
+                              {highlight}
+                            </span>
+                          ))}
+                        </div>
                       </div>
                     </SelectItem>
                   ))}
@@ -400,56 +426,50 @@ const PathDurationSelector = () => {
             </div>
           </div>
           
-          {selectedRoute && (
+          {selectedRouteData && (
             <div className="bg-white rounded-xl shadow-md p-6 max-w-4xl mx-auto">
-              {routes
-                .filter(route => route.id === selectedRoute)
-                .map((route) => (
-                  <div key={route.id}>
-                    <h3 className="text-2xl font-bold text-traveler-blue mb-4">{route.name}</h3>
-                    <div className="flex gap-4 text-gray-600 mb-6">
-                      <span className="flex items-center"><Clock className="w-4 h-4 mr-1" /> {route.duration} minutes</span>
-                      <span className="flex items-center"><MapPin className="w-4 h-4 mr-1" /> {route.distance}</span>
-                      <span>🎯 {preferences.walkingPace} pace</span>
-                    </div>
-                    
-                    <div className="mb-6">
-                      <h4 className="font-semibold mb-3 text-lg">Route Highlights:</h4>
-                      <div className="flex flex-wrap gap-2 mb-6">
-                        {route.highlights.map((highlight: string, index: number) => (
-                          <span key={index} className="bg-traveler-lightgray px-3 py-1 rounded-full text-sm">
-                            {highlight}
-                          </span>
-                        ))}
-                      </div>
-                    </div>
+              <h3 className="text-2xl font-bold text-traveler-blue mb-4">{selectedRouteData.name}</h3>
+              <div className="flex gap-4 text-gray-600 mb-6">
+                <span className="flex items-center"><Clock className="w-4 h-4 mr-1" /> {selectedRouteData.duration} minutes</span>
+                <span className="flex items-center"><MapPin className="w-4 h-4 mr-1" /> {selectedRouteData.distance}</span>
+                <span>🎯 {preferences.walkingPace} pace</span>
+              </div>
+              
+              <div className="mb-6">
+                <h4 className="font-semibold mb-3 text-lg">Route Highlights:</h4>
+                <div className="flex flex-wrap gap-2 mb-6">
+                  {selectedRouteData.highlights.map((highlight: string, index: number) => (
+                    <span key={index} className="bg-traveler-lightgray px-3 py-1 rounded-full text-sm">
+                      {highlight}
+                    </span>
+                  ))}
+                </div>
+              </div>
 
-                    <div>
-                      <h4 className="font-semibold mb-4 text-lg">Route Steps:</h4>
-                      <div className="space-y-4">
-                        {route.steps.map((step: any, index: number) => (
-                          <div key={index} className="flex items-start space-x-4 p-4 border border-gray-200 rounded-lg">
-                            <div className="flex-shrink-0">
-                              <div className="w-8 h-8 bg-traveler-teal text-white rounded-full flex items-center justify-center font-semibold text-sm">
-                                {index + 1}
-                              </div>
-                            </div>
-                            <div className="flex-grow">
-                              <h5 className="font-semibold text-traveler-blue mb-1">{step.location}</h5>
-                              <p className="text-gray-600 text-sm mb-2">{step.description}</p>
-                              {step.duration > 0 && (
-                                <span className="inline-flex items-center text-xs text-gray-500">
-                                  <Clock className="w-3 h-3 mr-1" />
-                                  {step.duration} minutes
-                                </span>
-                              )}
-                            </div>
-                          </div>
-                        ))}
+              <div>
+                <h4 className="font-semibold mb-4 text-lg">Route Steps:</h4>
+                <div className="space-y-4">
+                  {selectedRouteData.steps.map((step: any, index: number) => (
+                    <div key={index} className="flex items-start space-x-4 p-4 border border-gray-200 rounded-lg">
+                      <div className="flex-shrink-0">
+                        <div className="w-8 h-8 bg-traveler-teal text-white rounded-full flex items-center justify-center font-semibold text-sm">
+                          {index + 1}
+                        </div>
+                      </div>
+                      <div className="flex-grow">
+                        <h5 className="font-semibold text-traveler-blue mb-1">{step.location}</h5>
+                        <p className="text-gray-600 text-sm mb-2">{step.description}</p>
+                        {step.duration > 0 && (
+                          <span className="inline-flex items-center text-xs text-gray-500">
+                            <Clock className="w-3 h-3 mr-1" />
+                            {step.duration} minutes
+                          </span>
+                        )}
                       </div>
                     </div>
-                  </div>
-                ))}
+                  ))}
+                </div>
+              </div>
             </div>
           )}
         </div>
