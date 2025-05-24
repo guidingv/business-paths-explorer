@@ -1,8 +1,45 @@
 
 import React from 'react';
 import { Button } from "@/components/ui/button";
+import { useNavigate } from 'react-router-dom';
 
 const Hero = () => {
+  const navigate = useNavigate();
+
+  const handleFindPath = () => {
+    // Scroll to the PathDurationSelector section on the same page
+    const pathSelectorSection = document.querySelector('[data-section="path-selector"]');
+    if (pathSelectorSection) {
+      pathSelectorSection.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      // If not on the home page, navigate to home and then scroll
+      navigate('/');
+      setTimeout(() => {
+        const section = document.querySelector('[data-section="path-selector"]');
+        if (section) {
+          section.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+    }
+  };
+
+  const handleHowItWorks = () => {
+    // Scroll to the "How it works" section
+    const howItWorksSection = document.querySelector('[data-section="how-it-works"]');
+    if (howItWorksSection) {
+      howItWorksSection.scrollIntoView({ behavior: 'smooth' });
+    } else {
+      // If not on the home page, navigate to home and then scroll
+      navigate('/');
+      setTimeout(() => {
+        const section = document.querySelector('[data-section="how-it-works"]');
+        if (section) {
+          section.scrollIntoView({ behavior: 'smooth' });
+        }
+      }, 100);
+    }
+  };
+
   return (
     <div className="relative bg-gradient-to-r from-traveler-blue to-traveler-teal overflow-hidden">
       <div className="absolute inset-0 opacity-30 bg-[url('https://images.unsplash.com/photo-1496442226666-8d4d0e62e6e9?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80')] bg-cover bg-center"></div>
@@ -16,10 +53,17 @@ const Hero = () => {
             Make the most of your limited free time on business trips.
           </p>
           <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
-            <Button className="bg-traveler-orange hover:bg-orange-600 text-white text-lg px-8 py-6">
+            <Button 
+              className="bg-traveler-orange hover:bg-orange-600 text-white text-lg px-8 py-6"
+              onClick={handleFindPath}
+            >
               Find Your Path
             </Button>
-            <Button variant="outline" className="border-white text-black hover:bg-white/20 hover:border-white hover:text-black text-lg px-8 py-6 font-medium">
+            <Button 
+              variant="outline" 
+              className="border-white text-black hover:bg-white/20 hover:border-white hover:text-black text-lg px-8 py-6 font-medium"
+              onClick={handleHowItWorks}
+            >
               How It Works
             </Button>
           </div>

@@ -1,4 +1,3 @@
-
 import React from 'react';
 import Navbar from '@/components/Navbar';
 import Hero from '@/components/Hero';
@@ -14,7 +13,7 @@ const Index = () => {
         <Hero />
         
         {/* How it works section */}
-        <section className="py-16 bg-white">
+        <section className="py-16 bg-white" data-section="how-it-works">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
               <h2 className="text-3xl md:text-4xl font-bold text-traveler-blue mb-4">How It Works</h2>
@@ -46,7 +45,9 @@ const Index = () => {
         </section>
         
         <FeaturedCities />
-        <PathDurationSelector />
+        <div data-section="path-selector">
+          <PathDurationSelector />
+        </div>
         
         {/* Testimonials section */}
         <section className="py-16 bg-white">
