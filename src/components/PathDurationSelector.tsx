@@ -375,48 +375,54 @@ const PathDurationSelector = () => {
                 Choose Your Route
               </Label>
               <Select value={selectedRoute} onValueChange={setSelectedRoute}>
-                <SelectTrigger className="w-full text-lg py-6 bg-white border border-gray-300 shadow-sm">
-                  <SelectValue placeholder="Select a route to start your journey" />
+                <SelectTrigger className="w-full text-lg py-6 bg-white border-2 border-gray-300 shadow-sm hover:border-traveler-teal focus:border-traveler-teal focus:ring-2 focus:ring-traveler-teal/20">
+                  <SelectValue placeholder="Select a route to start your journey" className="text-gray-700" />
                 </SelectTrigger>
-                <SelectContent className="bg-white border shadow-lg z-50 max-w-none w-full">
+                <SelectContent className="bg-white border-2 shadow-2xl z-[100] w-full max-w-none rounded-lg overflow-hidden">
                   {routes.map((route) => (
-                    <SelectItem key={route.id} value={route.id} className="text-left p-6 hover:bg-gray-50 cursor-pointer border-b border-gray-100 last:border-b-0">
-                      <div className="flex flex-col space-y-3 w-full">
-                        <div className="flex justify-between items-start">
-                          <span className="font-bold text-xl text-gray-900">{route.name}</span>
-                          <div className="flex items-center gap-3 text-sm text-gray-500 ml-4">
-                            <span className="flex items-center bg-blue-50 px-2 py-1 rounded">
-                              <Clock className="w-4 h-4 mr-1" />
-                              {route.duration} min
-                            </span>
-                            <span className="flex items-center bg-green-50 px-2 py-1 rounded">
-                              <MapPin className="w-4 h-4 mr-1" />
-                              {route.distance}
-                            </span>
-                          </div>
-                        </div>
-                        
-                        <p className="text-gray-600 text-base leading-relaxed">{route.description}</p>
-                        
-                        <div className="flex items-center gap-2 text-sm">
-                          <span className="bg-purple-100 text-purple-700 px-3 py-1 rounded-full font-medium">
-                            🚶‍♂️ {preferences.walkingPace} pace
-                          </span>
-                        </div>
-                        
-                        <div>
-                          <span className="text-sm font-semibold text-gray-700 block mb-2">Route Highlights:</span>
-                          <div className="flex flex-wrap gap-2">
-                            {route.highlights.map((highlight: string, index: number) => (
-                              <span key={index} className="bg-traveler-teal/10 text-traveler-teal px-3 py-1 rounded-full text-sm font-medium border border-traveler-teal/20">
-                                {highlight}
+                    <SelectItem 
+                      key={route.id} 
+                      value={route.id} 
+                      className="p-0 hover:bg-gray-50 cursor-pointer border-b border-gray-100 last:border-b-0 focus:bg-gray-50 data-[highlighted]:bg-gray-50"
+                    >
+                      <div className="w-full p-6">
+                        <div className="flex flex-col space-y-4">
+                          <div className="flex justify-between items-start">
+                            <h3 className="font-bold text-xl text-gray-900 leading-tight">{route.name}</h3>
+                            <div className="flex items-center gap-3 text-sm text-gray-500 ml-4 flex-shrink-0">
+                              <span className="flex items-center bg-blue-50 px-3 py-1 rounded-full">
+                                <Clock className="w-4 h-4 mr-1" />
+                                {route.duration} min
                               </span>
-                            ))}
+                              <span className="flex items-center bg-green-50 px-3 py-1 rounded-full">
+                                <MapPin className="w-4 h-4 mr-1" />
+                                {route.distance}
+                              </span>
+                            </div>
                           </div>
-                        </div>
-                        
-                        <div className="pt-2 border-t border-gray-100">
-                          <span className="text-xs text-gray-500">Click to select this route and see detailed step-by-step directions</span>
+                          
+                          <p className="text-gray-600 text-base leading-relaxed">{route.description}</p>
+                          
+                          <div className="flex items-center gap-2">
+                            <span className="bg-purple-100 text-purple-700 px-3 py-1 rounded-full font-medium text-sm">
+                              🚶‍♂️ {preferences.walkingPace} pace
+                            </span>
+                          </div>
+                          
+                          <div>
+                            <span className="text-sm font-semibold text-gray-700 block mb-3">Route Highlights:</span>
+                            <div className="flex flex-wrap gap-2">
+                              {route.highlights.map((highlight: string, index: number) => (
+                                <span key={index} className="bg-traveler-teal/10 text-traveler-teal px-3 py-1 rounded-full text-sm font-medium border border-traveler-teal/20">
+                                  {highlight}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
+                          
+                          <div className="pt-3 border-t border-gray-100">
+                            <span className="text-xs text-gray-500 italic">Click to select this route and see detailed step-by-step directions</span>
+                          </div>
                         </div>
                       </div>
                     </SelectItem>
