@@ -4,7 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useNavigate, useParams } from 'react-router-dom';
-import { Clock, MapPin } from 'lucide-react';
+import { Clock, MapPin, Info, Star, Camera } from 'lucide-react';
 
 interface RoutePreference {
   duration: 30 | 60 | 120;
@@ -447,24 +447,76 @@ const PathDurationSelector = () => {
               </div>
 
               <div>
-                <h4 className="font-semibold mb-4 text-lg">Route Steps:</h4>
-                <div className="space-y-4">
+                <h4 className="font-semibold mb-4 text-lg">Detailed Route Steps:</h4>
+                <div className="space-y-6">
                   {selectedRouteData.steps.map((step: any, index: number) => (
-                    <div key={index} className="flex items-start space-x-4 p-4 border border-gray-200 rounded-lg">
+                    <div key={index} className="flex items-start space-x-4 p-6 border border-gray-200 rounded-lg">
                       <div className="flex-shrink-0">
-                        <div className="w-8 h-8 bg-traveler-teal text-white rounded-full flex items-center justify-center font-semibold text-sm">
+                        <div className="w-10 h-10 bg-traveler-teal text-white rounded-full flex items-center justify-center font-bold text-lg">
                           {index + 1}
                         </div>
                       </div>
                       <div className="flex-grow">
-                        <h5 className="font-semibold text-traveler-blue mb-1">{step.location}</h5>
-                        <p className="text-gray-600 text-sm mb-2">{step.description}</p>
-                        {step.duration > 0 && (
-                          <span className="inline-flex items-center text-xs text-gray-500">
-                            <Clock className="w-3 h-3 mr-1" />
-                            {step.duration} minutes
-                          </span>
-                        )}
+                        <div className="flex items-center gap-2 mb-2">
+                          <h5 className="font-bold text-xl text-traveler-blue">{step.location}</h5>
+                          {step.duration > 0 && (
+                            <span className="inline-flex items-center text-sm text-gray-500 bg-gray-100 px-2 py-1 rounded">
+                              <Clock className="w-4 h-4 mr-1" />
+                              {step.duration} min
+                            </span>
+                          )}
+                        </div>
+                        
+                        <p className="text-gray-700 mb-4 text-lg">{step.description}</p>
+                        
+                        {/* Detailed Information */}
+                        <div className="bg-gray-50 rounded-lg p-4 mb-4">
+                          <div className="flex items-start gap-2 mb-2">
+                            <Info className="w-5 h-5 text-traveler-teal mt-0.5" />
+                            <div>
+                              <h6 className="font-semibold text-traveler-blue mb-1">Details</h6>
+                              <p className="text-gray-600 text-sm">Explore the heart of the city with historic landmarks and charming cafés. This area offers a perfect blend of modern business district vibes with classic architecture.</p>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Tips */}
+                        <div className="bg-blue-50 rounded-lg p-4 mb-4">
+                          <div className="flex items-start gap-2">
+                            <Star className="w-5 h-5 text-blue-600 mt-0.5" />
+                            <div>
+                              <h6 className="font-semibold text-blue-800 mb-1">Pro Tips</h6>
+                              <p className="text-blue-700 text-sm">Best visited during lunch hours for the full business district atmosphere. Don't forget to look up at the impressive architecture while walking.</p>
+                            </div>
+                          </div>
+                        </div>
+
+                        {/* Highlights */}
+                        <div className="mb-4">
+                          <h6 className="font-semibold text-gray-800 mb-2 flex items-center gap-1">
+                            <Camera className="w-4 h-4" />
+                            Highlights
+                          </h6>
+                          <div className="flex flex-wrap gap-2">
+                            {selectedRouteData.highlights.slice(0, 3).map((highlight: string, idx: number) => (
+                              <span key={idx} className="bg-traveler-teal/10 text-traveler-teal px-3 py-1 rounded-full text-xs font-medium">
+                                {highlight}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+
+                        {/* Cost and Best Time */}
+                        <div className="flex flex-wrap gap-4 text-sm text-gray-600">
+                          <div>
+                            <span className="font-medium">💰 Cost: </span>
+                            <span>$5-15 per person</span>
+                          </div>
+                          <div>
+                            <span className="font-medium">⏰ Best time: </span>
+                            <span>Weekday lunch hours</span>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   ))}
