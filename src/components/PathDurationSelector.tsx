@@ -253,38 +253,38 @@ const PathDurationSelector = () => {
           </div>
           
           <div className="bg-white rounded-xl shadow-md p-4 sm:p-6 lg:p-8 max-w-3xl mx-auto">
-            <div className="flex flex-col sm:flex-row justify-center gap-3 sm:gap-4 mb-6 sm:mb-8">
+            <div className="flex flex-col space-y-3 sm:flex-row sm:space-y-0 sm:space-x-4 sm:justify-center mb-6 sm:mb-8">
               <Button
                 variant={preferences.walkingPace === 'leisurely' ? "default" : "outline"}
-                className={`text-base sm:text-lg py-4 sm:py-6 px-6 sm:px-8 rounded-lg flex flex-col w-full sm:w-auto ${
+                className={`text-base sm:text-lg py-6 px-6 sm:px-8 rounded-lg flex flex-col items-center justify-center h-auto min-h-[4rem] w-full sm:w-auto sm:min-w-[140px] ${
                   preferences.walkingPace === 'leisurely' ? 'bg-traveler-teal hover:bg-teal-700' : 'border-2 border-traveler-teal text-traveler-teal hover:bg-traveler-teal/10'
                 }`}
                 onClick={() => setPreferences(prev => ({ ...prev, walkingPace: 'leisurely' }))}
               >
-                Leisurely
-                <div className="text-xs sm:text-sm opacity-75">Slow & relaxed</div>
+                <span className="font-semibold">Leisurely</span>
+                <span className="text-xs sm:text-sm opacity-75 mt-1">Slow & relaxed</span>
               </Button>
               
               <Button
                 variant={preferences.walkingPace === 'moderate' ? "default" : "outline"}
-                className={`text-base sm:text-lg py-4 sm:py-6 px-6 sm:px-8 rounded-lg flex flex-col w-full sm:w-auto ${
+                className={`text-base sm:text-lg py-6 px-6 sm:px-8 rounded-lg flex flex-col items-center justify-center h-auto min-h-[4rem] w-full sm:w-auto sm:min-w-[140px] ${
                   preferences.walkingPace === 'moderate' ? 'bg-traveler-teal hover:bg-teal-700' : 'border-2 border-traveler-teal text-traveler-teal hover:bg-traveler-teal/10'
                 }`}
                 onClick={() => setPreferences(prev => ({ ...prev, walkingPace: 'moderate' }))}
               >
-                Moderate
-                <div className="text-xs sm:text-sm opacity-75">Comfortable pace</div>
+                <span className="font-semibold">Moderate</span>
+                <span className="text-xs sm:text-sm opacity-75 mt-1">Comfortable pace</span>
               </Button>
               
               <Button
                 variant={preferences.walkingPace === 'brisk' ? "default" : "outline"}
-                className={`text-base sm:text-lg py-4 sm:py-6 px-6 sm:px-8 rounded-lg flex flex-col w-full sm:w-auto ${
+                className={`text-base sm:text-lg py-6 px-6 sm:px-8 rounded-lg flex flex-col items-center justify-center h-auto min-h-[4rem] w-full sm:w-auto sm:min-w-[140px] ${
                   preferences.walkingPace === 'brisk' ? 'bg-traveler-teal hover:bg-teal-700' : 'border-2 border-traveler-teal text-traveler-teal hover:bg-traveler-teal/10'
                 }`}
                 onClick={() => setPreferences(prev => ({ ...prev, walkingPace: 'brisk' }))}
               >
-                Brisk
-                <div className="text-xs sm:text-sm opacity-75">Fast & efficient</div>
+                <span className="font-semibold">Brisk</span>
+                <span className="text-xs sm:text-sm opacity-75 mt-1">Fast & efficient</span>
               </Button>
             </div>
             
