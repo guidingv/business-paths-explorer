@@ -1,10 +1,9 @@
-
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Button } from "@/components/ui/button";
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
-import { ArrowLeft, MapPin, Clock } from 'lucide-react';
+import { ArrowLeft, MapPin, Clock, Info, Star, Camera } from 'lucide-react';
 
 // Mock route data - in real app this would come from API
 const routeData = {
@@ -17,33 +16,58 @@ const routeData = {
     steps: [
       { 
         location: 'Times Square', 
-        description: 'Begin your journey at the iconic Times Square', 
+        description: 'Begin your journey at the iconic Times Square - the crossroads of the world', 
         duration: 0,
-        coordinates: '40.7580,-73.9855'
+        coordinates: '40.7580,-73.9855',
+        details: 'Start your walk at the famous red steps overlooking Times Square. Take in the massive digital billboards and bustling energy.',
+        tips: 'Best photo spots are from the red steps or the TKTS booth area',
+        highlights: ['Iconic billboards', 'Street performers', 'TKTS red steps'],
+        estimatedCost: '$0',
+        bestTimeToVisit: 'Any time'
       },
       { 
         location: 'Bryant Park', 
-        description: 'Visit the beautiful Bryant Park and library', 
+        description: 'Visit the beautiful Bryant Park and the New York Public Library', 
         duration: 15,
-        coordinates: '40.7536,-73.9832'
+        coordinates: '40.7536,-73.9832',
+        details: 'A green oasis in midtown Manhattan, Bryant Park offers seasonal activities and is home to the iconic New York Public Library with its famous lion statues.',
+        tips: 'Check out the library\'s Rose Main Reading Room if open, and grab a coffee from one of the park kiosks',
+        highlights: ['NY Public Library', 'Seasonal activities', 'Green space in the city'],
+        estimatedCost: '$5-10 for refreshments',
+        bestTimeToVisit: 'Morning or afternoon'
       },
       { 
         location: 'Grand Central Terminal', 
-        description: 'Explore the historic Grand Central Terminal', 
+        description: 'Explore the historic Grand Central Terminal with its celestial ceiling', 
         duration: 20,
-        coordinates: '40.7527,-73.9772'
+        coordinates: '40.7527,-73.9772',
+        details: 'This Beaux-Arts masterpiece features a stunning astronomical ceiling mural, luxury shopping, and gourmet food options in the lower level.',
+        tips: 'Look up at the constellation ceiling, visit the food court downstairs, and check out the whispering gallery',
+        highlights: ['Celestial ceiling', 'Architecture', 'Food court', 'Whispering gallery'],
+        estimatedCost: '$10-20 for food',
+        bestTimeToVisit: 'Rush hours for atmosphere'
       },
       { 
         location: 'Chrysler Building', 
-        description: 'Admire the Art Deco Chrysler Building', 
+        description: 'Admire the Art Deco masterpiece - the Chrysler Building', 
         duration: 15,
-        coordinates: '40.7516,-73.9755'
+        coordinates: '40.7516,-73.9755',
+        details: 'One of NYC\'s most beautiful skyscrapers, this Art Deco icon features stunning metalwork and is best viewed from street level and nearby buildings.',
+        tips: 'Best viewing spots are from the corner of 42nd and Lexington, or from the nearby buildings for aerial views',
+        highlights: ['Art Deco architecture', 'Metalwork details', 'Historic significance'],
+        estimatedCost: '$0',
+        bestTimeToVisit: 'Golden hour for photography'
       },
       { 
         location: 'Times Square', 
-        description: 'Return to your starting point', 
+        description: 'Return to your starting point and reflect on your journey', 
         duration: 10,
-        coordinates: '40.7580,-73.9855'
+        coordinates: '40.7580,-73.9855',
+        details: 'Complete your loop back at Times Square. Notice how the energy and lights feel different after your historic walk through Manhattan.',
+        tips: 'Great time to grab dinner at one of the many restaurants or catch a Broadway show',
+        highlights: ['Full circle completion', 'Dinner options', 'Broadway theaters nearby'],
+        estimatedCost: '$20+ for dinner',
+        bestTimeToVisit: 'Evening for the full Times Square experience'
       }
     ]
   },
@@ -56,27 +80,47 @@ const routeData = {
     steps: [
       { 
         location: 'Times Square', 
-        description: 'Begin your culinary adventure', 
+        description: 'Begin your culinary adventure in the heart of NYC', 
         duration: 0,
-        coordinates: '40.7580,-73.9855'
+        coordinates: '40.7580,-73.9855',
+        details: 'Start your food journey surrounded by countless dining options, from food trucks to world-class restaurants.',
+        tips: 'Skip the tourist trap restaurants and head straight to your first authentic stop',
+        highlights: ['Food diversity', 'Cultural melting pot', 'Energy of the city'],
+        estimatedCost: '$0',
+        bestTimeToVisit: 'Before meal times'
       },
       { 
         location: 'Koreatown', 
-        description: 'Sample authentic Korean cuisine', 
+        description: 'Sample authentic Korean cuisine and experience Korean culture', 
         duration: 20,
-        coordinates: '40.7505,-73.9852'
+        coordinates: '40.7505,-73.9852',
+        details: 'Experience authentic Korean culture through food, karaoke, and traditional establishments. Try Korean BBQ, hotpot, or grab some Korean fried chicken.',
+        tips: 'Try the Korean BBQ at Kang Ho Dong Baekjeong or get Korean fried chicken at Turntable Chicken Jazz',
+        highlights: ['Korean BBQ', 'Karaoke bars', 'Authentic culture', 'Korean fried chicken'],
+        estimatedCost: '$15-30 per person',
+        bestTimeToVisit: 'Lunch or dinner time'
       },
       { 
         location: 'High Line Park', 
-        description: 'Walk the elevated park with city views', 
+        description: 'Walk the elevated park with stunning city views and art installations', 
         duration: 25,
-        coordinates: '40.7480,-74.0048'
+        coordinates: '40.7480,-74.0048',
+        details: 'This elevated linear park built on former railway tracks offers unique perspectives of the city, contemporary art installations, and great photo opportunities.',
+        tips: 'Enter at Gansevoort Street for the full experience, and look out for seasonal art installations',
+        highlights: ['Elevated city views', 'Art installations', 'Unique architecture', 'Photo opportunities'],
+        estimatedCost: '$0',
+        bestTimeToVisit: 'Afternoon for best lighting'
       },
       { 
         location: 'Chelsea Market', 
-        description: 'Explore the famous food hall', 
+        description: 'Explore the famous indoor food hall with diverse culinary options', 
         duration: 15,
-        coordinates: '40.7420,-74.0063'
+        coordinates: '40.7420,-74.0063',
+        details: 'A food lover\'s paradise housed in a former cookie factory, featuring dozens of vendors offering everything from tacos to lobster rolls.',
+        tips: 'Try the lobster roll at Lobster Place, tacos at Los Tacos No. 1, or browse unique artisanal products',
+        highlights: ['Diverse food vendors', 'Historic building', 'Artisanal products', 'Lobster rolls'],
+        estimatedCost: '$10-25 per item',
+        bestTimeToVisit: 'Lunch time or early dinner'
       }
     ]
   },
@@ -89,27 +133,47 @@ const routeData = {
     steps: [
       { 
         location: 'Times Square', 
-        description: 'Start exploring the business district', 
+        description: 'Start your business district exploration from the commercial heart', 
         duration: 0,
-        coordinates: '40.7580,-73.9855'
+        coordinates: '40.7580,-73.9855',
+        details: 'Begin your journey into NYC\'s financial and business world from this commercial epicenter.',
+        tips: 'Take the subway (4,5,6 trains) to save time getting to Wall Street',
+        highlights: ['Commercial energy', 'Starting point', 'Transit connections'],
+        estimatedCost: '$2.90 for subway',
+        bestTimeToVisit: 'Business hours'
       },
       { 
         location: 'Wall Street', 
-        description: 'See the heart of American finance', 
+        description: 'Experience the heart of American finance and global economics', 
         duration: 25,
-        coordinates: '40.7074,-74.0113'
+        coordinates: '40.7074,-74.0113',
+        details: 'Walk among the historic buildings where global finance happens daily. See the famous Charging Bull statue and the New York Stock Exchange.',
+        tips: 'Visit the Charging Bull early to avoid crowds, and take photos with Federal Hall where George Washington was inaugurated',
+        highlights: ['NYSE building', 'Charging Bull statue', 'Federal Hall', 'Financial history'],
+        estimatedCost: '$0',
+        bestTimeToVisit: 'Weekday morning for business atmosphere'
       },
       { 
         location: 'One World Observatory', 
-        description: 'Enjoy panoramic city views', 
+        description: 'Enjoy breathtaking panoramic views from the top of One World Trade Center', 
         duration: 20,
-        coordinates: '40.7127,-74.0134'
+        coordinates: '40.7127,-74.0134',
+        details: 'Experience stunning 360-degree views of NYC from the tallest building in the Western Hemisphere. The observatory offers interactive exhibits about the city.',
+        tips: 'Book tickets in advance, go during clear weather, and time your visit for sunset if possible',
+        highlights: ['360-degree city views', 'Interactive exhibits', 'Tallest building in Western Hemisphere', 'Sunset views'],
+        estimatedCost: '$35-45 for tickets',
+        bestTimeToVisit: 'Clear weather, sunset time'
       },
       { 
         location: 'Stone Street', 
-        description: 'Experience historic cobblestone dining', 
+        description: 'Experience historic cobblestone dining and nightlife', 
         duration: 15,
-        coordinates: '40.7041,-74.0124'
+        coordinates: '40.7041,-74.0124',
+        details: 'Walk on actual 17th-century cobblestones while enjoying outdoor dining and historic pubs. This area comes alive after work hours with financial district workers.',
+        tips: 'Best visited for happy hour or dinner, try the historic pubs like Stone Street Tavern',
+        highlights: ['17th-century cobblestones', 'Historic pubs', 'Outdoor dining', 'After-work atmosphere'],
+        estimatedCost: '$15-30 for drinks/food',
+        bestTimeToVisit: 'Happy hour (5-7 PM)'
       }
     ]
   }
@@ -231,24 +295,78 @@ const Route = () => {
 
           {/* Route Steps */}
           <div className="bg-white rounded-xl shadow-md p-6 mb-8">
-            <h2 className="text-2xl font-bold text-traveler-blue mb-6">Route Steps</h2>
-            <div className="space-y-4">
+            <h2 className="text-2xl font-bold text-traveler-blue mb-6">Detailed Route Steps</h2>
+            <div className="space-y-6">
               {route.steps.map((step: any, index: number) => (
-                <div key={index} className="flex items-start space-x-4 p-4 border border-gray-200 rounded-lg">
-                  <div className="flex-shrink-0">
-                    <div className="w-8 h-8 bg-traveler-teal text-white rounded-full flex items-center justify-center font-semibold">
-                      {index + 1}
+                <div key={index} className="border border-gray-200 rounded-lg p-6">
+                  <div className="flex items-start space-x-4">
+                    <div className="flex-shrink-0">
+                      <div className="w-10 h-10 bg-traveler-teal text-white rounded-full flex items-center justify-center font-bold text-lg">
+                        {index + 1}
+                      </div>
                     </div>
-                  </div>
-                  <div className="flex-grow">
-                    <h3 className="font-semibold text-lg text-traveler-blue">{step.location}</h3>
-                    <p className="text-gray-600 mb-2">{step.description}</p>
-                    {step.duration > 0 && (
-                      <span className="inline-flex items-center text-sm text-gray-500">
-                        <Clock className="w-4 h-4 mr-1" />
-                        {step.duration} minutes
-                      </span>
-                    )}
+                    <div className="flex-grow">
+                      <div className="flex items-center gap-2 mb-2">
+                        <h3 className="font-bold text-xl text-traveler-blue">{step.location}</h3>
+                        {step.duration > 0 && (
+                          <span className="inline-flex items-center text-sm text-gray-500 bg-gray-100 px-2 py-1 rounded">
+                            <Clock className="w-4 h-4 mr-1" />
+                            {step.duration} min
+                          </span>
+                        )}
+                      </div>
+                      
+                      <p className="text-gray-700 mb-4 text-lg">{step.description}</p>
+                      
+                      {/* Detailed Information */}
+                      <div className="bg-gray-50 rounded-lg p-4 mb-4">
+                        <div className="flex items-start gap-2 mb-2">
+                          <Info className="w-5 h-5 text-traveler-teal mt-0.5" />
+                          <div>
+                            <h4 className="font-semibold text-traveler-blue mb-1">Details</h4>
+                            <p className="text-gray-600 text-sm">{step.details}</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Tips */}
+                      <div className="bg-blue-50 rounded-lg p-4 mb-4">
+                        <div className="flex items-start gap-2">
+                          <Star className="w-5 h-5 text-blue-600 mt-0.5" />
+                          <div>
+                            <h4 className="font-semibold text-blue-800 mb-1">Pro Tips</h4>
+                            <p className="text-blue-700 text-sm">{step.tips}</p>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Highlights */}
+                      <div className="mb-4">
+                        <h4 className="font-semibold text-gray-800 mb-2 flex items-center gap-1">
+                          <Camera className="w-4 h-4" />
+                          Highlights
+                        </h4>
+                        <div className="flex flex-wrap gap-2">
+                          {step.highlights?.map((highlight: string, idx: number) => (
+                            <span key={idx} className="bg-traveler-teal/10 text-traveler-teal px-3 py-1 rounded-full text-xs font-medium">
+                              {highlight}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+
+                      {/* Cost and Best Time */}
+                      <div className="flex flex-wrap gap-4 text-sm text-gray-600">
+                        <div>
+                          <span className="font-medium">💰 Cost: </span>
+                          <span>{step.estimatedCost}</span>
+                        </div>
+                        <div>
+                          <span className="font-medium">⏰ Best time: </span>
+                          <span>{step.bestTimeToVisit}</span>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               ))}
