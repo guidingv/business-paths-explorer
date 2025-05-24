@@ -9,6 +9,7 @@ import NotFound from "./pages/NotFound";
 import Cities from "./pages/Cities";
 import City from "./pages/City";
 import RouteDetails from "./pages/Route";
+import CookieBanner from "./components/CookieBanner";
 
 const queryClient = new QueryClient();
 
@@ -27,6 +28,7 @@ const App = () => (
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
+      <CookieBanner />
     </TooltipProvider>
   </QueryClientProvider>
 );
