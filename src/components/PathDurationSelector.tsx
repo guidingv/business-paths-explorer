@@ -456,52 +456,56 @@ const PathDurationSelector = () => {
                 <SelectTrigger className="w-full text-sm sm:text-base py-3 sm:py-4 bg-white border-2 border-gray-300 shadow-sm hover:border-traveler-teal focus:border-traveler-teal focus:ring-2 focus:ring-traveler-teal/20">
                   <SelectValue placeholder="Select a route to start your journey" />
                 </SelectTrigger>
-                <SelectContent className="bg-white border-2 border-gray-200 shadow-2xl z-[99999] max-h-[60vh] overflow-y-auto rounded-lg w-full max-w-[95vw]">
+                <SelectContent className="bg-white border-2 border-gray-200 shadow-2xl z-[99999] max-h-[60vh] overflow-y-auto rounded-lg max-w-[95vw]">
                   {routes.map((route) => (
                     <SelectItem 
                       key={route.id} 
                       value={route.id} 
                       className="p-0 hover:bg-gray-50 cursor-pointer focus:bg-gray-50 data-[highlighted]:bg-gray-50 border-b border-gray-100 last:border-b-0"
                     >
-                      <div className="w-full max-w-full p-2 sm:p-3 space-y-2">
-                        <div className="flex flex-col space-y-2">
-                          <div className="flex flex-col gap-2">
-                            <div className="flex items-start justify-between gap-2">
-                              <h3 className="font-bold text-sm sm:text-base text-gray-900 leading-tight line-clamp-2 flex-1 min-w-0">
-                                {route.name}
-                              </h3>
-                              <div className="flex gap-1 flex-shrink-0">
-                                <span className="flex items-center bg-blue-50 px-1.5 py-0.5 rounded text-xs whitespace-nowrap">
-                                  <Clock className="w-3 h-3 mr-1" />
-                                  {route.duration}m
-                                </span>
-                                <span className="flex items-center bg-green-50 px-1.5 py-0.5 rounded text-xs whitespace-nowrap">
-                                  <MapPin className="w-3 h-3 mr-1" />
-                                  {route.distance}
-                                </span>
-                              </div>
-                            </div>
-                            
-                            <p className="text-gray-600 text-xs leading-relaxed line-clamp-2">{route.description}</p>
-                            
-                            <div className="flex items-center gap-1">
-                              <span className="bg-purple-100 text-purple-700 px-1.5 py-0.5 rounded text-xs whitespace-nowrap">
-                                🚶‍♂️ {preferences.walkingPace}
+                      <div className="w-full min-w-0 p-2 sm:p-3">
+                        <div className="flex flex-col gap-2">
+                          {/* Route Title and Basic Info */}
+                          <div className="flex flex-col gap-1">
+                            <h3 className="font-bold text-sm text-gray-900 leading-tight truncate">
+                              {route.name}
+                            </h3>
+                            <div className="flex items-center gap-2 text-xs text-gray-500">
+                              <span className="flex items-center bg-blue-50 px-1.5 py-0.5 rounded-full">
+                                <Clock className="w-3 h-3 mr-1" />
+                                {route.duration}m
+                              </span>
+                              <span className="flex items-center bg-green-50 px-1.5 py-0.5 rounded-full">
+                                <MapPin className="w-3 h-3 mr-1" />
+                                {route.distance}
                               </span>
                             </div>
-                            
-                            <div>
-                              <span className="text-xs font-semibold text-gray-700 block mb-1">Highlights:</span>
-                              <div className="flex flex-wrap gap-1">
-                                {route.highlights.slice(0, 2).map((highlight: string, index: number) => (
-                                  <span key={index} className="bg-traveler-teal/10 text-traveler-teal px-1.5 py-0.5 rounded text-xs font-medium border border-traveler-teal/20 line-clamp-1">
-                                    {highlight}
-                                  </span>
-                                ))}
-                                {route.highlights.length > 2 && (
-                                  <span className="text-xs text-gray-500">+{route.highlights.length - 2} more</span>
-                                )}
-                              </div>
+                          </div>
+                          
+                          {/* Description */}
+                          <p className="text-gray-600 text-xs leading-relaxed line-clamp-2 break-words">
+                            {route.description}
+                          </p>
+                          
+                          {/* Walking Pace */}
+                          <div className="flex items-center">
+                            <span className="bg-purple-100 text-purple-700 px-1.5 py-0.5 rounded-full text-xs">
+                              🚶‍♂️ {preferences.walkingPace}
+                            </span>
+                          </div>
+                          
+                          {/* Highlights */}
+                          <div>
+                            <span className="text-xs font-semibold text-gray-700 block mb-1">Highlights:</span>
+                            <div className="flex flex-wrap gap-1">
+                              {route.highlights.slice(0, 2).map((highlight: string, index: number) => (
+                                <span key={index} className="bg-traveler-teal/10 text-traveler-teal px-1.5 py-0.5 rounded-full text-xs font-medium truncate max-w-[80px]">
+                                  {highlight}
+                                </span>
+                              ))}
+                              {route.highlights.length > 2 && (
+                                <span className="text-xs text-gray-500">+{route.highlights.length - 2}</span>
+                              )}
                             </div>
                           </div>
                         </div>
