@@ -447,65 +447,46 @@ const PathDurationSelector = () => {
             </p>
           </div>
           
-          <div className="bg-white rounded-xl shadow-md p-3 sm:p-4 lg:p-6 max-w-6xl mx-auto mb-8">
-            <div className="mb-4 sm:mb-6">
-              <Label htmlFor="route-select" className="text-base sm:text-lg font-medium mb-3 sm:mb-4 block">
+          <div className="bg-white rounded-xl shadow-md p-6 lg:p-8 max-w-4xl mx-auto mb-8">
+            <div className="mb-8">
+              <Label htmlFor="route-select" className="text-xl font-semibold mb-6 block text-traveler-blue">
                 Choose Your Route
               </Label>
               <Select value={selectedRoute} onValueChange={setSelectedRoute}>
-                <SelectTrigger className="w-full text-sm sm:text-base py-3 sm:py-4 bg-white border-2 border-gray-300 shadow-sm hover:border-traveler-teal focus:border-traveler-teal focus:ring-2 focus:ring-traveler-teal/20">
+                <SelectTrigger className="w-full text-base py-4 bg-white border-2 border-gray-300 shadow-sm hover:border-traveler-teal focus:border-traveler-teal focus:ring-2 focus:ring-traveler-teal/20 rounded-lg">
                   <SelectValue placeholder="Select a route to start your journey" />
                 </SelectTrigger>
-                <SelectContent className="bg-white border-2 border-gray-200 shadow-2xl z-[99999] max-h-[60vh] overflow-y-auto rounded-lg max-w-[95vw]">
+                <SelectContent className="bg-white border border-gray-200 shadow-xl z-[99999] max-h-[400px] overflow-y-auto rounded-lg">
                   {routes.map((route) => (
                     <SelectItem 
                       key={route.id} 
                       value={route.id} 
-                      className="p-0 hover:bg-gray-50 cursor-pointer focus:bg-gray-50 data-[highlighted]:bg-gray-50 border-b border-gray-100 last:border-b-0"
+                      className="p-0 hover:bg-gray-50 cursor-pointer focus:bg-gray-50 data-[highlighted]:bg-gray-50"
                     >
-                      <div className="w-full min-w-0 p-2 sm:p-3">
-                        <div className="flex flex-col gap-2">
-                          {/* Route Title and Basic Info */}
-                          <div className="flex flex-col gap-1">
-                            <h3 className="font-bold text-sm text-gray-900 leading-tight truncate">
-                              {route.name}
-                            </h3>
-                            <div className="flex items-center gap-2 text-xs text-gray-500">
-                              <span className="flex items-center bg-blue-50 px-1.5 py-0.5 rounded-full">
-                                <Clock className="w-3 h-3 mr-1" />
+                      <div className="w-full p-6 border-b border-gray-100 last:border-b-0">
+                        <div className="space-y-4">
+                          <div className="flex justify-between items-start gap-4">
+                            <h3 className="font-bold text-lg text-gray-900 leading-tight">{route.name}</h3>
+                            <div className="flex gap-2 flex-shrink-0">
+                              <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium flex items-center gap-1">
+                                <Clock className="w-3 h-3" />
                                 {route.duration}m
                               </span>
-                              <span className="flex items-center bg-green-50 px-1.5 py-0.5 rounded-full">
-                                <MapPin className="w-3 h-3 mr-1" />
+                              <span className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium flex items-center gap-1">
+                                <MapPin className="w-3 h-3" />
                                 {route.distance}
                               </span>
                             </div>
                           </div>
                           
-                          {/* Description */}
-                          <p className="text-gray-600 text-xs leading-relaxed line-clamp-2 break-words">
-                            {route.description}
-                          </p>
+                          <p className="text-gray-600 text-sm leading-relaxed">{route.description}</p>
                           
-                          {/* Walking Pace */}
-                          <div className="flex items-center">
-                            <span className="bg-purple-100 text-purple-700 px-1.5 py-0.5 rounded-full text-xs">
-                              🚶‍♂️ {preferences.walkingPace}
+                          <div className="flex items-center justify-between">
+                            <span className="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm font-medium">
+                              🚶‍♂️ {preferences.walkingPace} pace
                             </span>
-                          </div>
-                          
-                          {/* Highlights */}
-                          <div>
-                            <span className="text-xs font-semibold text-gray-700 block mb-1">Highlights:</span>
-                            <div className="flex flex-wrap gap-1">
-                              {route.highlights.slice(0, 2).map((highlight: string, index: number) => (
-                                <span key={index} className="bg-traveler-teal/10 text-traveler-teal px-1.5 py-0.5 rounded-full text-xs font-medium truncate max-w-[80px]">
-                                  {highlight}
-                                </span>
-                              ))}
-                              {route.highlights.length > 2 && (
-                                <span className="text-xs text-gray-500">+{route.highlights.length - 2}</span>
-                              )}
+                            <div className="text-xs text-gray-500">
+                              {route.highlights.length} highlights included
                             </div>
                           </div>
                         </div>
@@ -516,9 +497,9 @@ const PathDurationSelector = () => {
               </Select>
             </div>
             
-            <div className="text-center flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center">
+            <div className="text-center flex gap-4 justify-center">
               <Button 
-                className="bg-traveler-orange hover:bg-orange-600 text-white text-base sm:text-lg px-6 sm:px-8 py-4 sm:py-6 w-full sm:w-auto"
+                className="bg-traveler-orange hover:bg-orange-600 text-white text-lg px-8 py-4"
                 onClick={handleStartRoute}
                 disabled={!selectedRoute}
               >
@@ -526,7 +507,7 @@ const PathDurationSelector = () => {
               </Button>
               <Button 
                 variant="outline"
-                className="text-base sm:text-lg px-6 sm:px-8 py-4 sm:py-6 w-full sm:w-auto"
+                className="text-lg px-8 py-4"
                 onClick={resetFlow}
               >
                 Plan Another Route
@@ -577,7 +558,6 @@ const PathDurationSelector = () => {
                         
                         <p className="text-gray-700 mb-3 sm:mb-4 text-sm sm:text-lg break-words">{step.description}</p>
                         
-                        {/* Detailed Information */}
                         <div className="bg-gray-50 rounded-lg p-3 sm:p-4 mb-3 sm:mb-4">
                           <div className="flex items-start gap-2">
                             <Info className="w-4 h-4 sm:w-5 sm:h-5 text-traveler-teal mt-0.5 flex-shrink-0" />
@@ -588,7 +568,6 @@ const PathDurationSelector = () => {
                           </div>
                         </div>
 
-                        {/* Tips */}
                         <div className="bg-blue-50 rounded-lg p-3 sm:p-4 mb-3 sm:mb-4">
                           <div className="flex items-start gap-2">
                             <Star className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600 mt-0.5 flex-shrink-0" />
@@ -599,7 +578,6 @@ const PathDurationSelector = () => {
                           </div>
                         </div>
 
-                        {/* Highlights */}
                         <div className="mb-3 sm:mb-4">
                           <h6 className="font-semibold text-gray-800 mb-2 flex items-center gap-1 text-sm sm:text-base">
                             <Camera className="w-3 h-3 sm:w-4 sm:h-4" />
@@ -614,7 +592,6 @@ const PathDurationSelector = () => {
                           </div>
                         </div>
 
-                        {/* Cost and Best Time */}
                         <div className="flex flex-wrap gap-2 sm:gap-4 text-xs sm:text-sm text-gray-600">
                           <div>
                             <span className="font-medium">💰 Cost: </span>
