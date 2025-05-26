@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useNavigate, useParams } from 'react-router-dom';
 import { Clock, MapPin, Info, Star, Camera } from 'lucide-react';
 
@@ -148,6 +147,201 @@ const PathDurationSelector = () => {
     return routes.find(route => route.id === selectedRoute);
   };
 
+  if (currentStep === 'results') {
+    const selectedRouteData = routes.find(route => route.id === selectedRoute);
+
+    return (
+      <section className="py-8 sm:py-12 lg:py-16 bg-traveler-lightgray">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-8 sm:mb-12">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-traveler-blue mb-4">Your Personalized Routes</h2>
+            <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto px-4">
+              Based on your preferences, here are the perfect {preferences.duration}-minute routes starting from {preferences.startLocation}.
+            </p>
+          </div>
+          
+          <div className="bg-white rounded-xl shadow-md p-6 lg:p-8 max-w-5xl mx-auto mb-8">
+            <h3 className="text-xl font-bold text-traveler-blue mb-6">Choose Your Route</h3>
+            
+            {/* Route Cards */}
+            <div className="space-y-4 mb-8">
+              {routes.map((route) => (
+                <div 
+                  key={route.id}
+                  className={`border-2 rounded-lg p-6 cursor-pointer transition-all hover:shadow-md ${
+                    selectedRoute === route.id 
+                      ? 'border-traveler-teal bg-traveler-teal/5' 
+                      : 'border-gray-200 hover:border-traveler-teal/50'
+                  }`}
+                  onClick={() => setSelectedRoute(route.id)}
+                >
+                  <div className="flex items-start justify-between mb-4">
+                    <div className="flex-1">
+                      <h4 className="text-lg font-bold text-gray-900 mb-2">{route.name}</h4>
+                      <p className="text-gray-600 text-sm mb-3">{route.description}</p>
+                      
+                      <div className="flex flex-wrap gap-2 mb-3">
+                        <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium flex items-center gap-1">
+                          <Clock className="w-3 h-3" />
+                          {route.duration}m
+                        </span>
+                        <span className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium flex items-center gap-1">
+                          <MapPin className="w-3 h-3" />
+                          {route.distance}
+                        </span>
+                        <span className="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm font-medium">
+                          🚶‍♂️ {preferences.walkingPace} pace
+                        </span>
+                      </div>
+                      
+                      <div className="flex flex-wrap gap-1">
+                        {route.highlights.slice(0, 2).map((highlight: string, idx: number) => (
+                          <span key={idx} className="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs">
+                            {highlight}
+                          </span>
+                        ))}
+                        {route.highlights.length > 2 && (
+                          <span className="bg-gray-100 text-gray-700 px-2 py-1 rounded text-xs">
+                            +{route.highlights.length - 2} more
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                    
+                    <div className="ml-4 flex-shrink-0">
+                      <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
+                        selectedRoute === route.id 
+                          ? 'border-traveler-teal bg-traveler-teal' 
+                          : 'border-gray-300'
+                      }`}>
+                        {selectedRoute === route.id && (
+                          <div className="w-2 h-2 bg-white rounded-full"></div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+            
+            <div className="text-center flex gap-4 justify-center">
+              <Button 
+                className="bg-traveler-orange hover:bg-orange-600 text-white text-lg px-8 py-4"
+                onClick={handleStartRoute}
+                disabled={!selectedRoute}
+              >
+                Start This Route
+              </Button>
+              <Button 
+                variant="outline"
+                className="text-lg px-8 py-4"
+                onClick={resetFlow}
+              >
+                Plan Another Route
+              </Button>
+            </div>
+          </div>
+          
+          {selectedRouteData && (
+            <div className="bg-white rounded-xl shadow-md p-4 sm:p-6 max-w-6xl mx-auto">
+              <h3 className="text-xl sm:text-2xl font-bold text-traveler-blue mb-4">{selectedRouteData.name}</h3>
+              <div className="flex flex-wrap gap-2 sm:gap-4 text-sm sm:text-base text-gray-600 mb-6">
+                <span className="flex items-center"><Clock className="w-4 h-4 mr-1" /> {selectedRouteData.duration} minutes</span>
+                <span className="flex items-center"><MapPin className="w-4 h-4 mr-1" /> {selectedRouteData.distance}</span>
+                <span>🎯 {preferences.walkingPace} pace</span>
+              </div>
+              
+              <div className="mb-6">
+                <h4 className="font-semibold mb-3 text-base sm:text-lg">Route Highlights:</h4>
+                <div className="flex flex-wrap gap-2 mb-6">
+                  {selectedRouteData.highlights.map((highlight: string, index: number) => (
+                    <span key={index} className="bg-traveler-lightgray px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm">
+                      {highlight}
+                    </span>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <h4 className="font-semibold mb-4 text-base sm:text-lg">Detailed Route Steps:</h4>
+                <div className="space-y-4 sm:space-y-6">
+                  {selectedRouteData.steps.map((step: any, index: number) => (
+                    <div key={index} className="flex items-start space-x-3 sm:space-x-4 p-4 sm:p-6 border border-gray-200 rounded-lg">
+                      <div className="flex-shrink-0">
+                        <div className="w-8 h-8 sm:w-10 sm:h-10 bg-traveler-teal text-white rounded-full flex items-center justify-center font-bold text-sm sm:text-lg">
+                          {index + 1}
+                        </div>
+                      </div>
+                      <div className="flex-grow min-w-0">
+                        <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 mb-2">
+                          <h5 className="font-bold text-base sm:text-xl text-traveler-blue break-words">{step.location}</h5>
+                          {step.duration > 0 && (
+                            <span className="inline-flex items-center text-xs sm:text-sm text-gray-500 bg-gray-100 px-2 py-1 rounded flex-shrink-0">
+                              <Clock className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
+                              {step.duration} min
+                            </span>
+                          )}
+                        </div>
+                        
+                        <p className="text-gray-700 mb-3 sm:mb-4 text-sm sm:text-lg break-words">{step.description}</p>
+                        
+                        <div className="bg-gray-50 rounded-lg p-3 sm:p-4 mb-3 sm:mb-4">
+                          <div className="flex items-start gap-2">
+                            <Info className="w-4 h-4 sm:w-5 sm:h-5 text-traveler-teal mt-0.5 flex-shrink-0" />
+                            <div className="min-w-0">
+                              <h6 className="font-semibold text-traveler-blue mb-1 text-sm sm:text-base">Details</h6>
+                              <p className="text-gray-600 text-xs sm:text-sm break-words">Explore the heart of the city with historic landmarks and charming cafés. This area offers a perfect blend of modern business district vibes with classic architecture.</p>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="bg-blue-50 rounded-lg p-3 sm:p-4 mb-3 sm:mb-4">
+                          <div className="flex items-start gap-2">
+                            <Star className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600 mt-0.5 flex-shrink-0" />
+                            <div className="min-w-0">
+                              <h6 className="font-semibold text-blue-800 mb-1 text-sm sm:text-base">Pro Tips</h6>
+                              <p className="text-blue-700 text-xs sm:text-sm break-words">Best visited during lunch hours for the full business district atmosphere. Don't forget to look up at the impressive architecture while walking.</p>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="mb-3 sm:mb-4">
+                          <h6 className="font-semibold text-gray-800 mb-2 flex items-center gap-1 text-sm sm:text-base">
+                            <Camera className="w-3 h-3 sm:w-4 sm:h-4" />
+                            Highlights
+                          </h6>
+                          <div className="flex flex-wrap gap-1 sm:gap-2">
+                            {selectedRouteData.highlights.slice(0, 3).map((highlight: string, idx: number) => (
+                              <span key={idx} className="bg-traveler-teal/10 text-traveler-teal px-2 sm:px-3 py-1 rounded-full text-xs font-medium break-words">
+                                {highlight}
+                              </span>
+                            ))}
+                          </div>
+                        </div>
+
+                        <div className="flex flex-wrap gap-2 sm:gap-4 text-xs sm:text-sm text-gray-600">
+                          <div>
+                            <span className="font-medium">💰 Cost: </span>
+                            <span>$5-15 per person</span>
+                          </div>
+                          <div>
+                            <span className="font-medium">⏰ Best time: </span>
+                            <span>Weekday lunch hours</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+      </section>
+    );
+  }
+
+  // All other steps remain exactly the same
   if (currentStep === 'city') {
     return (
       <section className="py-8 sm:py-12 lg:py-16 bg-traveler-lightgray">
@@ -429,186 +623,6 @@ const PathDurationSelector = () => {
               </Button>
             </div>
           </div>
-        </div>
-      </section>
-    );
-  }
-
-  if (currentStep === 'results') {
-    const selectedRouteData = getSelectedRouteData();
-
-    return (
-      <section className="py-8 sm:py-12 lg:py-16 bg-traveler-lightgray">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-8 sm:mb-12">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-traveler-blue mb-4">Your Personalized Routes</h2>
-            <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto px-4">
-              Based on your preferences, here are the perfect {preferences.duration}-minute routes starting from {preferences.startLocation}.
-            </p>
-          </div>
-          
-          <div className="bg-white rounded-xl shadow-md p-6 lg:p-8 max-w-4xl mx-auto mb-8">
-            <div className="mb-8">
-              <Label htmlFor="route-select" className="text-xl font-semibold mb-6 block text-traveler-blue">
-                Choose Your Route
-              </Label>
-              <Select value={selectedRoute} onValueChange={setSelectedRoute}>
-                <SelectTrigger className="w-full text-base py-4 bg-white border-2 border-gray-300 shadow-sm hover:border-traveler-teal focus:border-traveler-teal focus:ring-2 focus:ring-traveler-teal/20 rounded-lg">
-                  <SelectValue placeholder="Select a route to start your journey" />
-                </SelectTrigger>
-                <SelectContent className="bg-white border border-gray-200 shadow-xl z-[99999] max-h-[400px] overflow-y-auto rounded-lg">
-                  {routes.map((route) => (
-                    <SelectItem 
-                      key={route.id} 
-                      value={route.id} 
-                      className="p-0 hover:bg-gray-50 cursor-pointer focus:bg-gray-50 data-[highlighted]:bg-gray-50"
-                    >
-                      <div className="w-full p-6 border-b border-gray-100 last:border-b-0">
-                        <div className="space-y-4">
-                          <div className="flex justify-between items-start gap-4">
-                            <h3 className="font-bold text-lg text-gray-900 leading-tight">{route.name}</h3>
-                            <div className="flex gap-2 flex-shrink-0">
-                              <span className="bg-blue-100 text-blue-800 px-3 py-1 rounded-full text-sm font-medium flex items-center gap-1">
-                                <Clock className="w-3 h-3" />
-                                {route.duration}m
-                              </span>
-                              <span className="bg-green-100 text-green-800 px-3 py-1 rounded-full text-sm font-medium flex items-center gap-1">
-                                <MapPin className="w-3 h-3" />
-                                {route.distance}
-                              </span>
-                            </div>
-                          </div>
-                          
-                          <p className="text-gray-600 text-sm leading-relaxed">{route.description}</p>
-                          
-                          <div className="flex items-center justify-between">
-                            <span className="bg-purple-100 text-purple-700 px-3 py-1 rounded-full text-sm font-medium">
-                              🚶‍♂️ {preferences.walkingPace} pace
-                            </span>
-                            <div className="text-xs text-gray-500">
-                              {route.highlights.length} highlights included
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-            
-            <div className="text-center flex gap-4 justify-center">
-              <Button 
-                className="bg-traveler-orange hover:bg-orange-600 text-white text-lg px-8 py-4"
-                onClick={handleStartRoute}
-                disabled={!selectedRoute}
-              >
-                Start This Route
-              </Button>
-              <Button 
-                variant="outline"
-                className="text-lg px-8 py-4"
-                onClick={resetFlow}
-              >
-                Plan Another Route
-              </Button>
-            </div>
-          </div>
-          
-          {selectedRouteData && (
-            <div className="bg-white rounded-xl shadow-md p-4 sm:p-6 max-w-6xl mx-auto">
-              <h3 className="text-xl sm:text-2xl font-bold text-traveler-blue mb-4">{selectedRouteData.name}</h3>
-              <div className="flex flex-wrap gap-2 sm:gap-4 text-sm sm:text-base text-gray-600 mb-6">
-                <span className="flex items-center"><Clock className="w-4 h-4 mr-1" /> {selectedRouteData.duration} minutes</span>
-                <span className="flex items-center"><MapPin className="w-4 h-4 mr-1" /> {selectedRouteData.distance}</span>
-                <span>🎯 {preferences.walkingPace} pace</span>
-              </div>
-              
-              <div className="mb-6">
-                <h4 className="font-semibold mb-3 text-base sm:text-lg">Route Highlights:</h4>
-                <div className="flex flex-wrap gap-2 mb-6">
-                  {selectedRouteData.highlights.map((highlight: string, index: number) => (
-                    <span key={index} className="bg-traveler-lightgray px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm">
-                      {highlight}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              <div>
-                <h4 className="font-semibold mb-4 text-base sm:text-lg">Detailed Route Steps:</h4>
-                <div className="space-y-4 sm:space-y-6">
-                  {selectedRouteData.steps.map((step: any, index: number) => (
-                    <div key={index} className="flex items-start space-x-3 sm:space-x-4 p-4 sm:p-6 border border-gray-200 rounded-lg">
-                      <div className="flex-shrink-0">
-                        <div className="w-8 h-8 sm:w-10 sm:h-10 bg-traveler-teal text-white rounded-full flex items-center justify-center font-bold text-sm sm:text-lg">
-                          {index + 1}
-                        </div>
-                      </div>
-                      <div className="flex-grow min-w-0">
-                        <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 mb-2">
-                          <h5 className="font-bold text-base sm:text-xl text-traveler-blue break-words">{step.location}</h5>
-                          {step.duration > 0 && (
-                            <span className="inline-flex items-center text-xs sm:text-sm text-gray-500 bg-gray-100 px-2 py-1 rounded flex-shrink-0">
-                              <Clock className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
-                              {step.duration} min
-                            </span>
-                          )}
-                        </div>
-                        
-                        <p className="text-gray-700 mb-3 sm:mb-4 text-sm sm:text-lg break-words">{step.description}</p>
-                        
-                        <div className="bg-gray-50 rounded-lg p-3 sm:p-4 mb-3 sm:mb-4">
-                          <div className="flex items-start gap-2">
-                            <Info className="w-4 h-4 sm:w-5 sm:h-5 text-traveler-teal mt-0.5 flex-shrink-0" />
-                            <div className="min-w-0">
-                              <h6 className="font-semibold text-traveler-blue mb-1 text-sm sm:text-base">Details</h6>
-                              <p className="text-gray-600 text-xs sm:text-sm break-words">Explore the heart of the city with historic landmarks and charming cafés. This area offers a perfect blend of modern business district vibes with classic architecture.</p>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className="bg-blue-50 rounded-lg p-3 sm:p-4 mb-3 sm:mb-4">
-                          <div className="flex items-start gap-2">
-                            <Star className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600 mt-0.5 flex-shrink-0" />
-                            <div className="min-w-0">
-                              <h6 className="font-semibold text-blue-800 mb-1 text-sm sm:text-base">Pro Tips</h6>
-                              <p className="text-blue-700 text-xs sm:text-sm break-words">Best visited during lunch hours for the full business district atmosphere. Don't forget to look up at the impressive architecture while walking.</p>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className="mb-3 sm:mb-4">
-                          <h6 className="font-semibold text-gray-800 mb-2 flex items-center gap-1 text-sm sm:text-base">
-                            <Camera className="w-3 h-3 sm:w-4 sm:h-4" />
-                            Highlights
-                          </h6>
-                          <div className="flex flex-wrap gap-1 sm:gap-2">
-                            {selectedRouteData.highlights.slice(0, 3).map((highlight: string, idx: number) => (
-                              <span key={idx} className="bg-traveler-teal/10 text-traveler-teal px-2 sm:px-3 py-1 rounded-full text-xs font-medium break-words">
-                                {highlight}
-                              </span>
-                            ))}
-                          </div>
-                        </div>
-
-                        <div className="flex flex-wrap gap-2 sm:gap-4 text-xs sm:text-sm text-gray-600">
-                          <div>
-                            <span className="font-medium">💰 Cost: </span>
-                            <span>$5-15 per person</span>
-                          </div>
-                          <div>
-                            <span className="font-medium">⏰ Best time: </span>
-                            <span>Weekday lunch hours</span>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          )}
         </div>
       </section>
     );
