@@ -1,7 +1,7 @@
-
 import React from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import ContactForm from '@/components/ContactForm';
 
 const Privacy = () => {
   return (
@@ -131,14 +131,11 @@ const Privacy = () => {
 
                 <div className="bg-traveler-lightgray rounded-lg p-6 mt-8">
                   <h2 className="text-2xl font-bold text-traveler-blue mb-4">Contact Us</h2>
-                  <p className="text-gray-700">
+                  <p className="text-gray-700 mb-6">
                     If you have any questions about this privacy policy or our data practices, 
-                    please contact us at:
+                    please contact us using the form below:
                   </p>
-                  <p className="text-gray-700 mt-2">
-                    Email: privacy@traveler.business<br />
-                    Subject: Privacy Policy Inquiry
-                  </p>
+                  <ContactForm />
                 </div>
               </div>
             </div>

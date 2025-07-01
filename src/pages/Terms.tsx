@@ -1,7 +1,7 @@
-
 import React from 'react';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
+import ContactForm from '@/components/ContactForm';
 
 const Terms = () => {
   return (
@@ -161,13 +161,10 @@ const Terms = () => {
 
                 <div className="bg-traveler-lightgray rounded-lg p-6 mt-8">
                   <h2 className="text-2xl font-bold text-traveler-blue mb-4">Contact Information</h2>
-                  <p className="text-gray-700">
-                    If you have questions about these terms, please contact us at:
+                  <p className="text-gray-700 mb-6">
+                    If you have questions about these terms, please contact us using the form below:
                   </p>
-                  <p className="text-gray-700 mt-2">
-                    Email: legal@traveler.business<br />
-                    Subject: Terms of Service Inquiry
-                  </p>
+                  <ContactForm />
                 </div>
               </div>
             </div>
