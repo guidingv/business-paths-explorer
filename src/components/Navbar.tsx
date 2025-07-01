@@ -25,12 +25,6 @@ const Navbar = () => {
             Contact
           </Link>
         </div>
-        
-        <div className="flex items-center space-x-4">
-          <Button variant="outline" className="hidden sm:inline-flex border-traveler-blue text-traveler-blue hover:bg-traveler-blue hover:text-white">
-            Sign In
-          </Button>
-        </div>
       </div>
     </nav>
   );
