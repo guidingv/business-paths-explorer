@@ -60,7 +60,7 @@ const cityData = {
   'vienna': {
     name: 'Vienna',
     country: 'Austria',
-    imageUrl: 'https://images.unsplash.com/photo-1516550893923-42d407bd4ac2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1551038247-3d9af20df552?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
     description: 'Experience imperial elegance mixed with modern business efficiency in Austria\'s capital.',
     pathCount: 13
   },
@@ -81,7 +81,7 @@ const cityData = {
   'brussels': {
     name: 'Brussels',
     country: 'Belgium',
-    imageUrl: 'https://images.unsplash.com/photo-1559564484-0c01ede06e2f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1487958449943-2429e8be8625?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
     description: 'Explore the heart of European politics and business with Brussels\' efficient walking routes.',
     pathCount: 11
   },

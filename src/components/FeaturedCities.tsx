@@ -55,7 +55,7 @@ const cities = [
   {
     name: 'Vienna',
     country: 'Austria',
-    imageUrl: 'https://images.unsplash.com/photo-1516550893923-42d407bd4ac2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1551038247-3d9af20df552?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
     slug: 'vienna',
     pathCount: 13
   },
@@ -76,7 +76,7 @@ const cities = [
   {
     name: 'Brussels',
     country: 'Belgium',
-    imageUrl: 'https://images.unsplash.com/photo-1559564484-0c01ede06e2f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
+    imageUrl: 'https://images.unsplash.com/photo-1487958449943-2429e8be8625?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
     slug: 'brussels',
     pathCount: 11
   },
