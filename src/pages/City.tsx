@@ -49,6 +49,69 @@ const cityData = {
     imageUrl: 'https://images.unsplash.com/photo-1559564426-013d071f49a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
     description: 'Explore the rich history and vibrant culture of Germany\'s cosmopolitan capital.',
     pathCount: 16
+  },
+  'amsterdam': {
+    name: 'Amsterdam',
+    country: 'Netherlands',
+    imageUrl: 'https://images.unsplash.com/photo-1534351590666-13e3e96b5017?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
+    description: 'Navigate the charming canals and discover Amsterdam\'s unique business districts and cultural gems.',
+    pathCount: 14
+  },
+  'vienna': {
+    name: 'Vienna',
+    country: 'Austria',
+    imageUrl: 'https://images.unsplash.com/photo-1516550893923-42d407bd4ac2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
+    description: 'Experience imperial elegance mixed with modern business efficiency in Austria\'s capital.',
+    pathCount: 13
+  },
+  'rome': {
+    name: 'Rome',
+    country: 'Italy',
+    imageUrl: 'https://images.unsplash.com/photo-1552832230-c0197dd311b5?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
+    description: 'Walk through millennia of history while exploring Rome\'s bustling business quarters.',
+    pathCount: 19
+  },
+  'madrid': {
+    name: 'Madrid',
+    country: 'Spain',
+    imageUrl: 'https://images.unsplash.com/photo-1539037116277-4db20889f2d4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
+    description: 'Discover Madrid\'s vibrant business scene and rich cultural heritage in perfectly timed walks.',
+    pathCount: 17
+  },
+  'brussels': {
+    name: 'Brussels',
+    country: 'Belgium',
+    imageUrl: 'https://images.unsplash.com/photo-1559564484-0c01ede06e2f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
+    description: 'Explore the heart of European politics and business with Brussels\' efficient walking routes.',
+    pathCount: 11
+  },
+  'stockholm': {
+    name: 'Stockholm',
+    country: 'Sweden',
+    imageUrl: 'https://images.unsplash.com/photo-1509356843151-3e7d96241e11?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
+    description: 'Navigate Stockholm\'s innovative tech districts and stunning archipelago views during business breaks.',
+    pathCount: 10
+  },
+  'copenhagen': {
+    name: 'Copenhagen',
+    country: 'Denmark',
+    imageUrl: 'https://images.unsplash.com/photo-1513622470522-26c3c8a854bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
+    description: 'Experience Danish design culture and sustainable business practices in Copenhagen\'s walkable districts.',
+    pathCount: 12
+  },
+  'prague': {
+    name: 'Prague',
+    country: 'Czech Republic',
+    imageUrl: 'https://images.unsplash.com/photo-1541849546-216549ae216d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
+    description: 'Discover Prague\'s fairytale architecture and emerging business scene through curated walking paths.',
+    pathCount: 15
+  },
+  'zurich': {
+    name: 'Zurich',
+    country: 'Switzerland',
+    imageUrl: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
+    description: 'Explore Switzerland\'s financial capital with precision-timed routes perfect for busy business schedules.',
+    pathCount: 9
   }
 };
 

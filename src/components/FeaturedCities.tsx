@@ -44,6 +44,69 @@ const cities = [
     imageUrl: 'https://images.unsplash.com/photo-1559564426-013d071f49a9?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
     slug: 'berlin',
     pathCount: 16
+  },
+  {
+    name: 'Amsterdam',
+    country: 'Netherlands',
+    imageUrl: 'https://images.unsplash.com/photo-1534351590666-13e3e96b5017?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
+    slug: 'amsterdam',
+    pathCount: 14
+  },
+  {
+    name: 'Vienna',
+    country: 'Austria',
+    imageUrl: 'https://images.unsplash.com/photo-1516550893923-42d407bd4ac2?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
+    slug: 'vienna',
+    pathCount: 13
+  },
+  {
+    name: 'Rome',
+    country: 'Italy',
+    imageUrl: 'https://images.unsplash.com/photo-1552832230-c0197dd311b5?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
+    slug: 'rome',
+    pathCount: 19
+  },
+  {
+    name: 'Madrid',
+    country: 'Spain',
+    imageUrl: 'https://images.unsplash.com/photo-1539037116277-4db20889f2d4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
+    slug: 'madrid',
+    pathCount: 17
+  },
+  {
+    name: 'Brussels',
+    country: 'Belgium',
+    imageUrl: 'https://images.unsplash.com/photo-1559564484-0c01ede06e2f?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
+    slug: 'brussels',
+    pathCount: 11
+  },
+  {
+    name: 'Stockholm',
+    country: 'Sweden',
+    imageUrl: 'https://images.unsplash.com/photo-1509356843151-3e7d96241e11?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
+    slug: 'stockholm',
+    pathCount: 10
+  },
+  {
+    name: 'Copenhagen',
+    country: 'Denmark',
+    imageUrl: 'https://images.unsplash.com/photo-1513622470522-26c3c8a854bc?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
+    slug: 'copenhagen',
+    pathCount: 12
+  },
+  {
+    name: 'Prague',
+    country: 'Czech Republic',
+    imageUrl: 'https://images.unsplash.com/photo-1541849546-216549ae216d?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
+    slug: 'prague',
+    pathCount: 15
+  },
+  {
+    name: 'Zurich',
+    country: 'Switzerland',
+    imageUrl: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80',
+    slug: 'zurich',
+    pathCount: 9
   }
 ];
 
