@@ -30,9 +30,6 @@ const Navbar = () => {
           <Button variant="outline" className="hidden sm:inline-flex border-traveler-blue text-traveler-blue hover:bg-traveler-blue hover:text-white">
             Sign In
           </Button>
-          <Button className="bg-traveler-orange hover:bg-orange-600 text-white">
-            Get Started
-          </Button>
         </div>
       </div>
     </nav>
